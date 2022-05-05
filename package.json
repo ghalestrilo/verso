@@ -19,6 +19,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "gen": "yarn run peggy -o src/lang/tidal/parser.js src/lang/tidal/parser.peggy",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
