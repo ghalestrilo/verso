@@ -1,3 +1,4 @@
+// Developed with https://peggyjs.org/online
 {
 	function processScene(statements) {
     const comments = statements.filter(x => x?.comment).map(x => x.comment)
@@ -17,7 +18,7 @@ start = track
 
 track = statement*
 
-statement = blank? statement:(scene / inline_text / comment) (newline / blank)* { return statement }
+statement = blank? statement:(scene / stray_command / comment) (newline / blank)* { return statement }
 
 blank "blank" = $" "+ { return }
 newline "newline" = $[\n]+ { return }
@@ -30,6 +31,8 @@ comment "comment" = "--" text:(scene_meta / inline_text) {
 }
 
 scene_meta "scene metadata" = blank? "@" meta:inline_text { return { meta } }
+
+stray_command = inline_text { return { type: "stray", text: text() }}
 
 // TEMP: until we correctly parse scenes + props, just ignore commands
 inline_text = $((!newline .)+)
