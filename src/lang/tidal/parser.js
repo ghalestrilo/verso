@@ -174,6 +174,7 @@ function peg$parse(input, options) {
   var peg$c0 = " ";
   var peg$c1 = "do";
   var peg$c2 = "--";
+  var peg$c3 = "@";
 
   var peg$r0 = /^[\n]/;
   var peg$r1 = /^[ ]/;
@@ -188,12 +189,17 @@ function peg$parse(input, options) {
   var peg$e7 = peg$literalExpectation("do", false);
   var peg$e8 = peg$otherExpectation("comment");
   var peg$e9 = peg$literalExpectation("--", false);
-  var peg$e10 = peg$anyExpectation();
+  var peg$e10 = peg$otherExpectation("scene metadata");
+  var peg$e11 = peg$literalExpectation("@", false);
+  var peg$e12 = peg$anyExpectation();
 
   var peg$f0 = function(statement) { return statement };
   var peg$f1 = function() { return };
   var peg$f2 = function(statements) { return processScene(statements) };
-  var peg$f3 = function(comment) { return { comment }};
+  var peg$f3 = function(text) {
+    return text.meta ? text : { comment: text }
+  };
+  var peg$f4 = function(meta) { return { meta } };
 
   var peg$currPos = 0;
   var peg$savedPos = 0;
@@ -643,7 +649,10 @@ function peg$parse(input, options) {
       if (peg$silentFails === 0) { peg$fail(peg$e9); }
     }
     if (s1 !== peg$FAILED) {
-      s2 = peg$parseinline_text();
+      s2 = peg$parsescene_meta();
+      if (s2 === peg$FAILED) {
+        s2 = peg$parseinline_text();
+      }
       if (s2 !== peg$FAILED) {
         peg$savedPos = s0;
         s0 = peg$f3(s2);
@@ -659,6 +668,44 @@ function peg$parse(input, options) {
     if (s0 === peg$FAILED) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$e8); }
+    }
+
+    return s0;
+  }
+
+  function peg$parsescene_meta() {
+    var s0, s1, s2, s3;
+
+    peg$silentFails++;
+    s0 = peg$currPos;
+    s1 = peg$parseblank();
+    if (s1 === peg$FAILED) {
+      s1 = null;
+    }
+    if (input.charCodeAt(peg$currPos) === 64) {
+      s2 = peg$c3;
+      peg$currPos++;
+    } else {
+      s2 = peg$FAILED;
+      if (peg$silentFails === 0) { peg$fail(peg$e11); }
+    }
+    if (s2 !== peg$FAILED) {
+      s3 = peg$parseinline_text();
+      if (s3 !== peg$FAILED) {
+        peg$savedPos = s0;
+        s0 = peg$f4(s3);
+      } else {
+        peg$currPos = s0;
+        s0 = peg$FAILED;
+      }
+    } else {
+      peg$currPos = s0;
+      s0 = peg$FAILED;
+    }
+    peg$silentFails--;
+    if (s0 === peg$FAILED) {
+      s1 = peg$FAILED;
+      if (peg$silentFails === 0) { peg$fail(peg$e10); }
     }
 
     return s0;
@@ -686,7 +733,7 @@ function peg$parse(input, options) {
         peg$currPos++;
       } else {
         s4 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$e10); }
+        if (peg$silentFails === 0) { peg$fail(peg$e12); }
       }
       if (s4 !== peg$FAILED) {
         s3 = [s3, s4];
@@ -719,7 +766,7 @@ function peg$parse(input, options) {
             peg$currPos++;
           } else {
             s4 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$e10); }
+            if (peg$silentFails === 0) { peg$fail(peg$e12); }
           }
           if (s4 !== peg$FAILED) {
             s3 = [s3, s4];
@@ -748,11 +795,13 @@ function peg$parse(input, options) {
 
   	function processScene(statements) {
       const comments = statements.filter(x => x?.comment).map(x => x.comment)
-      const actions = statements.filter(x => !x?.comment)
+      const actions = statements.filter(x => !(x?.comment || x?.meta))
+      const meta = statements.filter(x => x?.meta).map(x => x.meta)
       return {
         type: "scene",
         comments,
-        actions
+        actions,
+        meta
       }
     }
 
