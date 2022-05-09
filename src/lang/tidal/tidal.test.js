@@ -12,6 +12,6 @@ describe('tidal language support', () => {
   it('parses correct scene count', () => {
     const parsed = parse(content, {trace: true})
     console.log(JSON.stringify(parsed))
-    expect(parsed[0].filter(stm => stm?.type === 'scene')).toHaveLength(4)
+    expect(parsed.filter(stm => stm?.type === 'scene')).toHaveLength(4)
   })
 })
