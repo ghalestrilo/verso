@@ -1,17 +1,11 @@
 import React from "react";
-import {
-  Container,
-  Divider,
-  Form,
-  Grid,
-  Header,
-  TextArea,
-} from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
+import { useReplState } from "../../state/repl";
 
 const Console = () => {
-  const contents = "lorem ipsum";
-
-  return <Container>{contents}</Container>;
+  const output = useReplState((state) => state.output);
+  // const output = "haha";
+  return <Container>{output}</Container>;
 };
 
 export default Console;
