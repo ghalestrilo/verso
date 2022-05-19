@@ -9,12 +9,7 @@ const testFile =
   "https://raw.githubusercontent.com/ghalestrilo/seg-react/main/src/lang/tidal/song1.hs";
 
 const SessionPage = () => {
-  const track = useTrackState((state) => {
-    console.log(state);
-    return state;
-  });
-
-  console.log(track);
+  const track = useTrackState((state) => state);
 
   useEffect(() => {
     if (track && !track.raw) {
