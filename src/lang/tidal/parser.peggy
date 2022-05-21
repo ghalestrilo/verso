@@ -14,9 +14,15 @@
 
   // TODO: create structureTrack function
   function structureTrack(statements) {
+    const channels = (statements || []).filter(s => s.type === 'scene')
+      .map(({ actions }) => actions.map(({ channel }) => channel))
+      .flat()
+      .filter(x => x)
+
     return {
       // scenes: statements.filter(x => x?.type === 'scene')
-      scenes: statements
+      scenes: statements,
+      channels,
       }
   }
 }
@@ -27,13 +33,33 @@ start = track
 
 track = statements:(statement*) { return structureTrack(statements)}
 
+
 statement = blank? statement:(scene / stray_command / comment) (newline / blank)* { return statement }
 
+
+
+// Seg Concepts
+scene "scene" = "do" statements:(indent @(command / comment / inline_text))* { return processScene(statements) }
+
+command "channel command"
+    = channel:channel command:inline_text { return {
+      channel,
+      command
+    }}
+    // = channel parameter* <param-sep space> pattern effect* 
+
+channel = pchannel / dchannel
+pchannel = "p" @string
+dchannel = name:([d] integer) { return name.join('') }
+
+// Basic parsing units
 blank "blank" = $" "+ { return }
 newline "newline" = $[\n]+ { return }
 indent "indent" = $(newline [ ]+) { return }
+string "string" = quotes (!newline !quotes .)* quotes
+quotes = "\""
+integer "integer" = digits:[0-9]+ { return parseInt(digits.join(""), 10); }
 
-scene "scene" = "do" statements:(indent @(comment / inline_text))* { return processScene(statements) }
 
 comment "comment" = "--" text:(scene_meta / inline_text) {
   return text.meta ? text : { comment: text }

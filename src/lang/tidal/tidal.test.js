@@ -23,4 +23,12 @@ describe("tidal language support", () => {
     console.log(JSON.stringify(meta));
     // expect(meta).toEqual([])
   });
+
+  it("parses correct instruments", () => {
+    const { channels, scenes } = parse(content, { trace: true });
+    console.log("scenes", scenes[scenes.length - 3].actions);
+    console.log("channels", channels);
+    expect(channels?.length).toEqual(4);
+    expect(channels).toEqual(["drums", "d1", "d3", "d2"]);
+  });
 });
