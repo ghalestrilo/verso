@@ -23,6 +23,7 @@
 
     return {
       // scenes: statements.filter(x => x?.type === 'scene')
+      // TODO: actions should be { channel, command, raw } so it's easier to send to repl
       scenes: scenes.map(scene => ({
         ...scene,
         actions: Object.fromEntries(
