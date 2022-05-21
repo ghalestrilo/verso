@@ -1129,15 +1129,24 @@ function peg$parse(input, options) {
     }
 
     // TODO: create structureTrack function
-    function structureTrack(statements) {
-      const channels = (statements || []).filter(s => s.type === 'scene')
+    function structureTrack(statements = []) {
+      const scenes = statements.filter(s => s.type === 'scene')
+
+      const channels = scenes.filter(s => s.type === 'scene')
         .map(({ actions }) => actions.map(({ channel }) => channel))
         .flat()
         .filter(x => x)
 
       return {
         // scenes: statements.filter(x => x?.type === 'scene')
-        scenes: statements,
+        scenes: scenes.map(scene => ({
+          ...scene,
+          actions: Object.fromEntries(
+            scene.actions.map(action => action.channel
+              ? [action.channel, action.command]
+              : ['unknown', action])
+            )
+        })),
         channels,
         }
     }
