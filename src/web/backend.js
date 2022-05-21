@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const port = 4000;
 
@@ -11,6 +12,7 @@ const params = ["-ghci-script", "/home/tidal/boot.tidal"];
 // Server setup
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
 
 var spawn = require("child_process").spawn;
 
@@ -40,10 +42,9 @@ child.stderr.on("data", function (data) {
 
 app.post("/eval", (req, res) => {
   const input = req?.body?.content;
-  console.log(input);
-
-  // child.stdin.write(outputBuffer);
-  const response = input ? child.stdin.write(input) : "nope";
+  const command = `${input}\n`;
+  console.log(command);
+  const response = input ? child.stdin.write(command) : "nope";
   res.send(response);
 });
 

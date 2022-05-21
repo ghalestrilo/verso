@@ -1,5 +1,7 @@
 // import WebSocket from "ws";
 
+import axios from "axios";
+
 // const ws = new WebSocket("ws://localhost", { port: 8000 });
 
 // ws.on("open", function open() {
@@ -11,4 +13,5 @@
 // });
 
 // export const sendToRepl = (data) => ws.send(data);
-export const sendToRepl = (data) => null;
+export const sendToRepl = (content) =>
+  axios.post("http://localhost:4000/eval", { content });

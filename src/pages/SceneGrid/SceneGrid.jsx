@@ -1,12 +1,15 @@
 import React from "react";
 import { Table } from "semantic-ui-react";
+import { useReplState } from "../../state/repl";
 
 const SceneGrid = ({ track }) => {
   // console.log(track);
   console.log(track);
   const { channels, scenes } = track;
 
-  const fireScene = () => alert("haha");
+  const { send } = useReplState();
+
+  const fireScene = () => send("mc [ fast 32 0 ]");
 
   return (
     <>
