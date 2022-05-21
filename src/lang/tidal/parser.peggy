@@ -11,12 +11,21 @@
       meta
     }
   }
+
+  // TODO: create structureTrack function
+  function structureTrack(statements) {
+    return {
+      // scenes: statements.filter(x => x?.type === 'scene')
+      scenes: statements
+      }
+  }
 }
 
 
+// TODO: call structureTrack function
 start = track
 
-track = statement*
+track = statements:(statement*) { return structureTrack(statements)}
 
 statement = blank? statement:(scene / stray_command / comment) (newline / blank)* { return statement }
 

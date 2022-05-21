@@ -11,16 +11,17 @@ const testFile =
 const SessionPage = () => {
   const track = useTrackState((state) => state);
 
+  const { load = () => null, raw = null } = track;
+
   useEffect(() => {
-    if (track && !track.raw) {
-      fetch(testFile)
-        .then((x) => x.text())
-        .then((x) => {
-          console.log("raw", x);
-          track.load(x);
-        });
-    }
-  }, [track]);
+    if (raw) return;
+    fetch(testFile)
+      .then((x) => x.text())
+      .then((x) => {
+        console.log("raw", x);
+        load(x);
+      });
+  }, [load, raw]);
 
   if (!track) return <></>;
 

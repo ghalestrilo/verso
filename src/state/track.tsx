@@ -1,4 +1,5 @@
 import create from "zustand";
+import { parse } from "../lang/tidal/parser";
 
 // const filename = "file:///git/seg-react/src/lang/tidal/song1.hs";
 // const trackfile = window.open(testfile);
@@ -12,8 +13,8 @@ type State = {
 
 export const useTrackState = create<State>((set) => ({
   name: "Testname",
-  // raw: "testfile",
   raw: undefined,
+  // TODO: remove mock data
   instruments: ["drums", "keys", "blips"],
   scenes: ["Scene 1", "Scene 2", "Scene 3"].map((name) => ({
     name,
@@ -24,9 +25,13 @@ export const useTrackState = create<State>((set) => ({
       ])
     ),
   })),
-  load: (data: string) =>
-    set((state) => ({
+  load: (data: string) => {
+    // TODO: destructure parsed data here, catch errors before merging objects
+    const parsed = parse(data);
+    return set((state) => ({
       ...state,
+      parsed,
       raw: data,
-    })),
+    }));
+  },
 }));
