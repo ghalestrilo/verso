@@ -49,14 +49,14 @@ command "channel command"
     // = channel parameter* <param-sep space> pattern effect* 
 
 channel = pchannel / dchannel
-pchannel = "p" @string
+pchannel = "p " name:string { return name }
 dchannel = name:([d] integer) { return name.join('') }
 
 // Basic parsing units
 blank "blank" = $" "+ { return }
 newline "newline" = $[\n]+ { return }
 indent "indent" = $(newline [ ]+) { return }
-string "string" = quotes (!newline !quotes .)* quotes
+string "string" = quotes @$(!newline !quotes .)* quotes
 quotes = "\""
 integer "integer" = digits:[0-9]+ { return parseInt(digits.join(""), 10); }
 

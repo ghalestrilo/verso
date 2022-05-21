@@ -25,10 +25,9 @@ describe("tidal language support", () => {
   });
 
   it("parses correct instruments", () => {
-    const { channels, scenes } = parse(content, { trace: true });
-    console.log("scenes", scenes[scenes.length - 3].actions);
-    console.log("channels", channels);
+    const { channels } = parse(content, { trace: true });
+    const channelsSorted = channels.sort();
     expect(channels?.length).toEqual(4);
-    expect(channels).toEqual(["drums", "d1", "d3", "d2"]);
+    expect(channelsSorted).toEqual(["d1", "d2", "d3", "drums"]);
   });
 });
