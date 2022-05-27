@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
-import { Container, Divider, Grid, Header } from "semantic-ui-react";
+import {
+  Button,
+  Container,
+  Divider,
+  Grid,
+  Header,
+  Menu,
+} from "semantic-ui-react";
 import { useTrackState } from "../state/track";
 import Console from "./Console/Console";
 import Editor from "./Editor/Editor";
@@ -13,7 +20,12 @@ const testFileLocal = "memento/8-axe.tidal";
 const SessionPage = () => {
   const track = useTrackState((state) => state);
 
-  const { setTrackData = () => null, raw = null, loadFile } = track;
+  const {
+    setTrackData = () => null,
+    saveFile = () => null,
+    raw = null,
+    loadFile,
+  } = track;
 
   useEffect(() => {
     if (raw) return;
@@ -30,7 +42,12 @@ const SessionPage = () => {
 
   return (
     <Container fluid style={{ padding: "2rem" }}>
-      <Header as={"h1"}>{track?.name}</Header>
+      <Menu fixed="top" secondary style={{}}>
+        <Menu.Item as={"h1"}>{track?.name}</Menu.Item>
+        <Menu.Item position="right">
+          <Button onClick={saveFile}>save</Button>
+        </Menu.Item>
+      </Menu>
       <Grid columns={2} divided>
         <Grid.Column>
           <Grid.Row>

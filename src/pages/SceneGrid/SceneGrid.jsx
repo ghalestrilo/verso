@@ -1,5 +1,5 @@
 import React from "react";
-import { Table } from "semantic-ui-react";
+import { Button, Table } from "semantic-ui-react";
 import { useReplState } from "../../state/repl";
 
 const SceneGrid = ({ track }) => {
@@ -28,11 +28,17 @@ const SceneGrid = ({ track }) => {
             ({ name, actions }) =>
               actions && (
                 <Table.Row>
-                  <Table.Cell onClick={fireScene}>{name}</Table.Cell>
+                  <Table.Cell>
+                    <Button
+                      compact
+                      onClick={fireScene}
+                      size="mini"
+                      icon="play"
+                    ></Button>
+                    {name}
+                  </Table.Cell>
                   {channels.map((channelName) => (
-                    <Table.Cell onClick={fireScene}>
-                      {actions[channelName]}
-                    </Table.Cell>
+                    <Table.Cell>{actions[channelName]}</Table.Cell>
                   ))}
                 </Table.Row>
               )
