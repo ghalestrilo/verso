@@ -3,7 +3,9 @@ const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-const port = 4000;
+// Server conig
+const port = process.env?.SEG_PORT_INTERNAL || 4000;
+const projFolder = process.env?.SEG_PROJECT_FOLDER || "~/.seg/projects";
 
 // Configuration for tidal. Generalize this in the future
 const command = "ghci";
@@ -15,6 +17,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 var spawn = require("child_process").spawn;
+const { readFileSync, writeFileSync, readdirSync } = require("fs");
 
 const child = spawn(command, params);
 
@@ -33,13 +36,41 @@ child.stdout.on("data", function (data) {
 
 //spit stderr to screen
 child.stderr.on("data", function (data) {
-  // process.stdout.write(data.toString());
-
   const output = data.toString();
   process.stderr.write(output);
   outputBuffer += output;
 });
 
+// SERVER COMMANDS
+
+// /load : get the contents of received filename
+app.get("/load", (req, res) => {
+  const fullfilename =
+    req?.body?.filename && `${projFolder}/${req?.body?.filename}`;
+
+  const data = readFileSync(fullfilename);
+
+  res.send(data);
+});
+
+// /list : return the projects in your project folder
+app.get("/list", (req, res) => {
+  res.send(readdirSync(projFolder));
+});
+
+// /save : write the received contents to the received filename
+app.post("/save", (req, res) => {
+  const fullfilename =
+    req?.body?.filename && `${projFolder}/${req?.body?.filename}`;
+
+  const data = req?.body?.data;
+
+  writeFileSync(fullfilename, data);
+
+  res.send(data);
+});
+
+// /eval : send the received code block to the repl
 app.post("/eval", (req, res) => {
   const input = req?.body?.content;
   const command = `${input}\n`;
@@ -49,7 +80,7 @@ app.post("/eval", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Seg local server listening on ${port}`);
 });
 
 // const WebSocket = require("ws");
