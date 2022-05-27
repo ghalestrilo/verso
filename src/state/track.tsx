@@ -8,7 +8,7 @@ type State = {
   name: string;
   channels: string[];
   raw?: string[] | string;
-  load: (data: string) => void;
+  setTrackData: (data: string) => void;
 };
 
 export const useTrackState = create<State>((set) => ({
@@ -25,7 +25,7 @@ export const useTrackState = create<State>((set) => ({
       ])
     ),
   })),
-  load: (data: string) => {
+  setTrackData: (data: string) => {
     // TODO: destructure parsed data here, catch errors before merging objects
     const parsed = parse(data);
     return set((state) => ({

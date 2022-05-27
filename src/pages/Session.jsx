@@ -11,7 +11,7 @@ const testFile =
 const SessionPage = () => {
   const track = useTrackState((state) => state);
 
-  const { load = () => null, raw = null } = track;
+  const { setTrackData = () => null, raw = null } = track;
 
   useEffect(() => {
     if (raw) return;
@@ -19,9 +19,9 @@ const SessionPage = () => {
       .then((x) => x.text())
       .then((x) => {
         console.log("raw", x);
-        load(x);
+        setTrackData(x);
       });
-  }, [load, raw]);
+  }, [setTrackData, raw]);
 
   if (!track) return <></>;
 
