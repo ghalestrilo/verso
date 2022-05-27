@@ -46,7 +46,7 @@ child.stderr.on("data", function (data) {
 // /load : get the contents of received filename
 app.get("/load", (req, res) => {
   const fullfilename =
-    req?.body?.filename && `${projFolder}/${req?.body?.filename}`;
+    req.query?.filename && `${projFolder}/${req.query?.filename}`;
 
   const data = readFileSync(fullfilename);
 
