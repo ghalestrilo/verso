@@ -20,7 +20,7 @@ const target = `http://${config.SEG_HOST_INTERNAL}:${config.SEG_PORT_INTERNAL}`;
 export const sendToRepl = (content) =>
   axios.post(`${target}/eval`, { content });
 
-export const loadFile = (filename) =>
+export const loadFile = (filename = "") =>
   axios.get(`${target}/load?filename=${filename}`);
 
 export const listDirectories = () => axios.get(`${target}/list`);

@@ -8,10 +8,12 @@ import SceneGrid from "./SceneGrid/SceneGrid";
 const testFile =
   "https://raw.githubusercontent.com/ghalestrilo/seg-react/main/src/lang/tidal/song1.hs";
 
+const testFileLocal = "memento/8-axe.tidal";
+
 const SessionPage = () => {
   const track = useTrackState((state) => state);
 
-  const { setTrackData = () => null, raw = null } = track;
+  const { setTrackData = () => null, raw = null, loadFile } = track;
 
   useEffect(() => {
     if (raw) return;
@@ -20,8 +22,9 @@ const SessionPage = () => {
       .then((x) => {
         console.log("raw", x);
         setTrackData(x);
+        loadFile(testFileLocal);
       });
-  }, [setTrackData, raw]);
+  }, [setTrackData, loadFile, raw]);
 
   if (!track) return <></>;
 

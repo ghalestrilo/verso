@@ -1,5 +1,6 @@
 import create from "zustand";
 import { parse } from "../lang/tidal/parser";
+import { loadFile } from "../web/api";
 
 // const filename = "file:///git/seg-react/src/lang/tidal/song1.hs";
 // const trackfile = window.open(testfile);
@@ -9,7 +10,14 @@ type State = {
   channels: string[];
   raw?: string[] | string;
   setTrackData: (data: string) => void;
+  loadFile: (data: string) => void;
 };
+
+const parseTrack = (data: any) => (state: State) => ({
+  ...state,
+  ...parse(data),
+  raw: data,
+});
 
 export const useTrackState = create<State>((set) => ({
   name: "Testname",
@@ -27,11 +35,9 @@ export const useTrackState = create<State>((set) => ({
   })),
   setTrackData: (data: string) => {
     // TODO: destructure parsed data here, catch errors before merging objects
-    const parsed = parse(data);
-    return set((state) => ({
-      ...state,
-      ...parsed,
-      raw: data,
-    }));
+    return set(parseTrack(data));
+  },
+  loadFile: async (filename: string) => {
+    loadFile(filename).then(({ data }) => set(parseTrack(data)));
   },
 }));
