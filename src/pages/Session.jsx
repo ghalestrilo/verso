@@ -1,12 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  Button,
-  Container,
-  Divider,
-  Grid,
-  Header,
-  Menu,
-} from "semantic-ui-react";
+import { Button, Container, Divider, Grid, Menu } from "semantic-ui-react";
 import { useTrackState } from "../state/track";
 import Console from "./Console/Console";
 import Editor from "./Editor/Editor";
@@ -15,7 +8,7 @@ import SceneGrid from "./SceneGrid/SceneGrid";
 const testFile =
   "https://raw.githubusercontent.com/ghalestrilo/seg-react/main/src/lang/tidal/song1.hs";
 
-const testFileLocal = "memento/8-axe.tidal";
+const testFileLocal = "test.tidal";
 
 const SessionPage = () => {
   const track = useTrackState((state) => state);
@@ -58,9 +51,7 @@ const SessionPage = () => {
             <Console />
           </Grid.Row>
         </Grid.Column>
-        <Grid.Column>
-          <Editor />
-        </Grid.Column>
+        <Grid.Column>{track?.raw && <Editor />}</Grid.Column>
       </Grid>
     </Container>
   );

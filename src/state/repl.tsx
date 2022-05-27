@@ -8,7 +8,7 @@ type State = {
 };
 
 export const useReplState = create<State>((set) => ({
-  output: "asd",
+  output: "This will one day have your console output. Please have faith",
   append: (message) =>
     set((state) => ({ ...state, output: state.output + message })),
   send: (message) => sendToRepl(message),

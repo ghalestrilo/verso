@@ -10,8 +10,13 @@ type State = {
   channels: string[];
   raw?: string[] | string;
   filename: string;
+  // selection: {
+  //   index: number,
+  //   data: string,
+  // },
   setTrackData: (data: string) => void;
   loadFile: (data: string) => void;
+  // selectScene: (index: number, data: string) => null
 };
 
 const parseTrack = (data: any) => (state: State) => ({
@@ -39,4 +44,11 @@ export const useTrackState = create<State>((set) => ({
       }))
     );
   },
+  // selectScene: (index: number, data: string) =>
+  //   set((state) => ({
+  //     selection: {
+  //       index,
+  //       data,
+  //     },
+  //   })),
 }));
