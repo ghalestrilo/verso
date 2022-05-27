@@ -21,6 +21,7 @@ const SessionPage = () => {
   } = track;
 
   useEffect(() => {
+    // TODO: Substitute this logic for a splashscreen modal / file loading dialog
     if (raw) return;
     fetch(testFile)
       .then((x) => x.text())
@@ -38,7 +39,7 @@ const SessionPage = () => {
       <Menu fixed="top" secondary style={{}}>
         <Menu.Item as={"h1"}>{track?.name}</Menu.Item>
         <Menu.Item position="right">
-          <Button onClick={saveFile}>save</Button>
+          <Button onClick={() => saveFile(testFileLocal, raw)}>save</Button>
         </Menu.Item>
       </Menu>
       <Grid columns={2} divided>

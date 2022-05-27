@@ -67,7 +67,7 @@ app.post("/save", (req, res) => {
 
   writeFileSync(fullfilename, data);
 
-  res.send(data);
+  res.send(fullfilename);
 });
 
 // /eval : send the received code block to the repl
