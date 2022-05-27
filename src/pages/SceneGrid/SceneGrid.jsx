@@ -2,14 +2,15 @@ import React from "react";
 import { Button, Table } from "semantic-ui-react";
 import { useReplState } from "../../state/repl";
 
+// TODO: lang.prepareCommand
+const prepareCommand = (raw) => `:{\n ${raw} \n:}`;
+
 const SceneGrid = ({ track }) => {
   // console.log(track);
   console.log(track);
   const { channels, scenes } = track;
 
-  const { send } = useReplState();
-
-  const fireScene = () => send("mc [ fast 32 0 ]");
+  const { send: fireScene } = useReplState();
 
   return (
     <>
@@ -25,13 +26,13 @@ const SceneGrid = ({ track }) => {
 
         <Table.Body>
           {scenes.map(
-            ({ name, actions }) =>
+            ({ name, actions, raw }) =>
               actions && (
                 <Table.Row>
                   <Table.Cell>
                     <Button
                       compact
-                      onClick={fireScene}
+                      onClick={() => fireScene(prepareCommand(raw))}
                       size="mini"
                       icon="play"
                     ></Button>

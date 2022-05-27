@@ -44,7 +44,10 @@ start = track
 track = statements:(statement*) { return structureTrack(statements)}
 
 
-statement = blank? statement:(scene / stray_command / comment) (newline / blank)* { return statement }
+statement = blank? statement:(scene / stray_command / comment) (newline / blank)* { return {
+  ...statement,
+  raw: text()
+} }
 
 
 

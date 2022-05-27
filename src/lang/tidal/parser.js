@@ -205,7 +205,10 @@ function peg$parse(input, options) {
   var peg$e19 = peg$literalExpectation("@", false);
 
   var peg$f0 = function(statements) { return structureTrack(statements)};
-  var peg$f1 = function(statement) { return statement };
+  var peg$f1 = function(statement) { return {
+    ...statement,
+    raw: text()
+  } };
   var peg$f2 = function(statements) { return processScene(statements) };
   var peg$f3 = function(channel, command) { return {
         channel,
@@ -1139,6 +1142,7 @@ function peg$parse(input, options) {
 
       return {
         // scenes: statements.filter(x => x?.type === 'scene')
+        // TODO: actions should be { channel, command, raw } so it's easier to send to repl
         scenes: scenes.map(scene => ({
           ...scene,
           actions: Object.fromEntries(
