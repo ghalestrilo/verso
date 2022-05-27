@@ -9,6 +9,7 @@ type State = {
   name: string;
   channels: string[];
   raw?: string[] | string;
+  filename: string;
   setTrackData: (data: string) => void;
   loadFile: (data: string) => void;
 };
@@ -22,6 +23,7 @@ const parseTrack = (data: any) => (state: State) => ({
 export const useTrackState = create<State>((set) => ({
   name: "Filename",
   raw: "",
+  filename: "",
   // TODO: remove mock data
   channels: [],
   scenes: [],
