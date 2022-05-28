@@ -51,7 +51,9 @@ const SessionPage = () => {
             <Console />
           </Grid.Row>
         </Grid.Column>
-        <Grid.Column>{track?.raw && <Editor />}</Grid.Column>
+        <Grid.Column>
+          <Editor />
+        </Grid.Column>
       </Grid>
     </Container>
   );

@@ -32,12 +32,10 @@ export const useTrackState = create<State>((set) => ({
   filename: "",
   channels: [],
   scenes: [],
-  setTrackData: (input: string) => {
+  setTrackData: (raw: string) => {
     // TODO: destructure parsed data here, catch errors before merging objects
-    const raw = input || "\n";
     return set((state) => {
       const parsed = parse(raw);
-      console.log(parsed);
       return {
         ...state,
         ...parsed,
