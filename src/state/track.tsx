@@ -1,6 +1,6 @@
 import create from "zustand";
 import { parse } from "../lang/tidal/parser";
-import { loadFile, saveFile as apiSaveFile } from "../web/api";
+import { loadFile, saveLocalFile } from "../web/api";
 
 // const filename = "file:///git/seg-react/src/lang/tidal/song1.hs";
 // const trackfile = window.open(testfile);
@@ -16,7 +16,7 @@ type State = {
   // },
   setTrackData: (data: string) => void;
   loadFile: (data: string) => void;
-  saveFile: (filename: string, data: string) => void;
+  saveSessionToFile: (filename: string, data: string) => void;
   // selectScene: (index: number, data: string) => null
 };
 
@@ -30,18 +30,18 @@ export const useTrackState = create<State>((set) => ({
   name: "Filename",
   raw: "",
   filename: "",
-  // TODO: remove mock data
   channels: [],
   scenes: [],
-  setTrackData: (data: string) => {
+  setTrackData: (input: string) => {
     // TODO: destructure parsed data here, catch errors before merging objects
+    const raw = input || "\n";
     return set((state) => {
-      const parsed = parse(data);
+      const parsed = parse(raw);
       console.log(parsed);
       return {
         ...state,
-        ...parse(data),
-        raw: data,
+        ...parsed,
+        raw,
       };
     });
   },
@@ -53,8 +53,11 @@ export const useTrackState = create<State>((set) => ({
       }))
     );
   },
-  saveFile: (filename: string, data: string) => {
-    apiSaveFile(filename, data);
+  saveSessionToFile: (filename?: string, raw?: string) => {
+    set((state) => {
+      saveLocalFile(filename || state.filename, raw || state.raw);
+      return state;
+    });
   },
   // selectScene: (index: number, data: string) =>
   //   set((state) => ({

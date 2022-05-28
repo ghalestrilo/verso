@@ -25,8 +25,9 @@ export const loadFile = (filename = "") =>
 
 export const listDirectories = () => axios.get(`${target}/list`);
 
-export const saveFile = (filename, data) =>
+export const saveLocalFile = (filename, data) => {
   axios.post(`${target}/save`, {
     filename,
     data,
   });
+}

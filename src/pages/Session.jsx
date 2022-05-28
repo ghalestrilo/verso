@@ -1,36 +1,35 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Container, Divider, Grid, Menu } from "semantic-ui-react";
 import { useTrackState } from "../state/track";
+import { SEG_TEST_FILE } from "../web/config";
 import Console from "./Console/Console";
 import Editor from "./Editor/Editor";
 import SceneGrid from "./SceneGrid/SceneGrid";
 
-const testFile =
-  "https://raw.githubusercontent.com/ghalestrilo/seg-react/main/src/lang/tidal/song1.hs";
-
-const testFileLocal = "test.tidal";
+const testFile = SEG_TEST_FILE;
 
 const SessionPage = () => {
   const track = useTrackState((state) => state);
 
+  const [loadedTestFile, setLoadedTestFile] = useState(false);
+
   const {
     setTrackData = () => null,
-    saveFile = () => null,
+    saveSessionToFile = () => null,
     raw = null,
     loadFile,
   } = track;
 
   useEffect(() => {
     // TODO: Substitute this logic for a splashscreen modal / file loading dialog
-    if (raw) return;
+    if (raw || loadedTestFile) return;
     fetch(testFile)
       .then((x) => x.text())
       .then((x) => {
-        console.log("raw", x);
-        setTrackData(x);
-        loadFile(testFileLocal);
+        loadFile(testFile);
+        setLoadedTestFile(true);
       });
-  }, [setTrackData, loadFile, raw]);
+  }, [setTrackData, loadFile, raw, loadedTestFile]);
 
   if (!track) return <></>;
 
@@ -39,7 +38,7 @@ const SessionPage = () => {
       <Menu fixed="top" secondary style={{}}>
         <Menu.Item as={"h1"}>{track?.name}</Menu.Item>
         <Menu.Item position="right">
-          <Button onClick={() => saveFile(testFileLocal, raw)}>save</Button>
+          <Button onClick={() => saveSessionToFile()}>save</Button>
         </Menu.Item>
       </Menu>
       <Grid columns={2} divided>

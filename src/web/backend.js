@@ -65,7 +65,12 @@ app.post("/save", (req, res) => {
 
   const data = req?.body?.data;
 
-  writeFileSync(fullfilename, data);
+  console.log(data)
+  console.log(fullfilename)
+  writeFileSync(fullfilename, data, {
+    encoding: 'utf8',
+    flag: 'w'
+  });
 
   res.send(fullfilename);
 });

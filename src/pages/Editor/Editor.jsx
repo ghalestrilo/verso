@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import { Form } from "semantic-ui-react";
 import { useTrackState } from "../../state/track";
 
 import CodeMirror from "@uiw/react-codemirror";
@@ -18,6 +17,8 @@ const Editor = () => {
       onChange={(value, viewUpdate) => {
         setContent(value);
         setTrackData(value);
+        console.log(value);
+        console.log("value");
       }}
     />
   );
