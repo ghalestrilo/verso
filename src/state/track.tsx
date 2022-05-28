@@ -35,7 +35,15 @@ export const useTrackState = create<State>((set) => ({
   scenes: [],
   setTrackData: (data: string) => {
     // TODO: destructure parsed data here, catch errors before merging objects
-    return set(parseTrack(data));
+    return set((state) => {
+      const parsed = parse(data);
+      console.log(parsed);
+      return {
+        ...state,
+        ...parse(data),
+        raw: data,
+      };
+    });
   },
   loadFile: (filename: string) => {
     loadFile(filename).then(({ data }) =>

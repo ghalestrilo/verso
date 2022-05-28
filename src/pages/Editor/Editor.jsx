@@ -1,24 +1,23 @@
 import React, { useState } from "react";
-import { Form } from "semantic-ui-react";
+// import { Form } from "semantic-ui-react";
 import { useTrackState } from "../../state/track";
+
+import CodeMirror from "@uiw/react-codemirror";
+// import { javascript } from "@codemirror/lang-javascript";
 
 const Editor = () => {
   const { raw, setTrackData } = useTrackState();
   const [content, setContent] = useState(raw || "");
+
   return (
-    <Form
-      onSubmit={(data) => {
-        const text = data?.target[0]?.value;
-        if (text) setTrackData(text);
+    <CodeMirror
+      value={content}
+      height="800px"
+      onChange={(value, viewUpdate) => {
+        setContent(value);
+        setTrackData(value);
       }}
-    >
-      <Form.TextArea
-        style={{ minHeight: 800 }}
-        value={content}
-        // onChange={(e) => setContent(e.target.value)}
-      />
-      <Form.Button content="Submit">Update</Form.Button>
-    </Form>
+    />
   );
 };
 
