@@ -78,7 +78,8 @@ comment "comment" = "--" text:(scene_meta / inline_text) {
   return text.meta ? text : { comment: text }
 }
 
-scene_meta "scene metadata" = blank? "@" meta:inline_text { return { meta } }
+scene_meta "scene metadata" =
+  blank? "@" key:([a-z]+) value:inline_text { return { meta: { [key.join('')]: value } } }
 
 stray_command = inline_text { return { type: "stray", text: text() }}
 

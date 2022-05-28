@@ -35,8 +35,9 @@ const SceneGrid = ({ track }) => {
                       onClick={() => fireScene(prepareCommand(raw))}
                       size="mini"
                       icon="play"
-                    ></Button>
-                    {name}
+                    >
+                      {name}
+                    </Button>
                   </Table.Cell>
                   {channels.map((channelName) => (
                     <Table.Cell>{actions[channelName]}</Table.Cell>
