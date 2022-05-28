@@ -1151,12 +1151,17 @@ function peg$parse(input, options) {
   	function processScene(statements) {
       const comments = statements.filter(x => x?.comment).map(x => x.comment)
       const actions = statements.filter(x => !(x?.comment || x?.meta))
-      const meta = statements.filter(x => x?.meta).map(x => x.meta)
+      const meta = statements
+        .filter(x => x?.meta)
+        .map(x => x.meta)
+        .map(metaEntry => Object.entries(metaEntry))
+        .flat()
+
       return {
         type: "scene",
         comments,
         actions,
-        meta
+        meta: Object.fromEntries(meta)
       }
     }
 

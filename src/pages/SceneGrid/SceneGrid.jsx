@@ -3,7 +3,11 @@ import { Button, Table } from "semantic-ui-react";
 import { useReplState } from "../../state/repl";
 
 // TODO: lang.prepareCommand
-const prepareCommand = (raw) => `:{\n ${raw} \n:}`;
+const prepareCommand = (raw) =>
+  `:{\n ${raw
+    .split("\n")
+    .filter((x) => !x.includes("--"))
+    .join("\n")} \n:}`;
 
 const SceneGrid = ({ track }) => {
   // console.log(track);
@@ -26,7 +30,7 @@ const SceneGrid = ({ track }) => {
 
         <Table.Body>
           {scenes.map(
-            ({ name, actions, raw }) =>
+            ({ meta, actions, raw }) =>
               actions && (
                 <Table.Row>
                   <Table.Cell>
@@ -36,7 +40,7 @@ const SceneGrid = ({ track }) => {
                       size="mini"
                       icon="play"
                     ></Button>
-                    {name}
+                    {meta?.name}
                   </Table.Cell>
                   {channels.map((channelName) => (
                     <Table.Cell>{actions[channelName]}</Table.Cell>
