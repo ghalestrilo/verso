@@ -21,6 +21,9 @@ const { readFileSync, writeFileSync, readdirSync } = require("fs");
 
 const child = spawn(command, params);
 
+// TODO: spawn custom programs (carabiner is just one possible aux program)
+if (process.env?.SEG_CARABINER_BIN) spawn(process.env?.SEG_CARABINER_BIN);
+
 child.on("close", function (code) {
   console.log("Finished with code " + code);
 });
