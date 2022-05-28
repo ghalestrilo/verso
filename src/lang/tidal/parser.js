@@ -1168,6 +1168,8 @@ function peg$parse(input, options) {
         .map(({ actions }) => actions.map(({ channel }) => channel))
         .flat()
         .filter(x => x)
+      
+      const uniqueChannels = [...(new Set(channels))]
 
       return {
         // scenes: statements.filter(x => x?.type === 'scene')
@@ -1180,7 +1182,7 @@ function peg$parse(input, options) {
               : ['unknown', action])
             )
         })),
-        channels,
+        channels: uniqueChannels,
         }
     }
 

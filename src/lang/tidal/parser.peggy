@@ -20,6 +20,8 @@
       .map(({ actions }) => actions.map(({ channel }) => channel))
       .flat()
       .filter(x => x)
+    
+    const uniqueChannels = [...(new Set(channels))]
 
     return {
       // scenes: statements.filter(x => x?.type === 'scene')
@@ -32,7 +34,7 @@
             : ['unknown', action])
           )
       })),
-      channels,
+      channels: uniqueChannels,
       }
   }
 }
