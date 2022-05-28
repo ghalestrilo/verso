@@ -27,7 +27,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "gen": "yarn run peggy -o src/lang/tidal/parser.js src/lang/tidal/parser.peggy",
-    "backend": "node src/web/backend.js",
+    "backend": "SEG_PROJECT_FOLDER=~/git/pieces node src/web/backend.js",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
