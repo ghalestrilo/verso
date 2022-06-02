@@ -34,7 +34,7 @@ const ProjectSelectModal = () => {
       }}
       header="Load project"
       content={
-        <Modal.Content>
+        <Modal.Content scrolling>
           <List link>
             {list.map((x) => (
               <List.Item
@@ -50,8 +50,6 @@ const ProjectSelectModal = () => {
           </List>
         </Modal.Content>
       }
-      // onActionClick={(e) => track.loadFile}
-      // actions={["Load", { key: "done", content: "Done", positive: true }]}
     />
   );
 };

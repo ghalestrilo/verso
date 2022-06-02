@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const path = require("path");
+const klawSync = require('klaw-sync')
 
 // Server conig
 const port = process.env?.SEG_PORT_INTERNAL || 4000;
@@ -58,7 +60,14 @@ app.get("/load", (req, res) => {
 
 // /list : return the projects in your project folder
 app.get("/list", (req, res) => {
-  res.send(readdirSync(projFolder));
+  // const relevantExtensions = ['tidal', 'hs']
+  const filterFn = item => {
+    const basename = path.basename(item.path)
+    return basename === '.' || basename[0] !== '.'
+  }
+  const projectList = klawSync(projFolder, { filter: filterFn })
+    .map(x => x.path)
+  res.send(projectList);
 });
 
 // /save : write the received contents to the received filename

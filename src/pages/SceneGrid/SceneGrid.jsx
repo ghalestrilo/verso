@@ -16,7 +16,7 @@ const SceneGrid = ({ track }) => {
 
   return (
     <>
-      <Table celled selectable>
+      <Table celled selectable compact fixed>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Scene</Table.HeaderCell>
