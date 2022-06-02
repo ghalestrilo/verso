@@ -10,8 +10,6 @@ const prepareCommand = (raw) =>
     .join("\n")} \n:}`;
 
 const SceneGrid = ({ track }) => {
-  // console.log(track);
-  console.log(track);
   const { channels, scenes } = track;
 
   const { send: fireScene } = useReplState();

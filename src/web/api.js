@@ -23,7 +23,7 @@ export const sendToRepl = (content) =>
 export const loadFile = (filename = "") =>
   axios.get(`${target}/load?filename=${filename}`);
 
-export const listDirectories = () => axios.get(`${target}/list`);
+export const listProjects = () => axios.get(`${target}/list`);
 
 export const saveLocalFile = (filename, data) => {
   axios.post(`${target}/save`, {
