@@ -13,7 +13,7 @@ const projFolder = process.env?.SEG_PROJECT_FOLDER || "~/.seg/projects";
 
 // Configuration for tidal. Generalize this in the future
 const command = "ghci";
-const params = ["-ghci-script", "/home/tidal/boot.tidal"];
+const params = ["-ghci-script", process.env?.SEG_TIDAL_BOOT_PATH || "/home/tidal/boot.tidal"];
 
 // Server setup
 app.use(bodyParser.urlencoded({ extended: false }));
