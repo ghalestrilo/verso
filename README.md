@@ -28,6 +28,12 @@ Stretch goals
 
 After cloning the repo, install all dependencies by runnin `yarn install`.
 
+Then, copy the file `.env.sample` as `.env` and adjust them accordingly:
+
+* `SEG_PROJECT_FOLDER`: Path to your session files
+* `SEG_CARABINER_BIN`: Path to Carabiner binary
+* `SEG_TIDAL_BOOT_PATH`: Path to TidalCycles bootloading script
+
 To run the project (as of today), you must start the `webapp` as well as the `backend`. Run the following commands
 
 - `yarn start`: will start the webapp on port localhost:3000
