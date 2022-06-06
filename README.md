@@ -12,12 +12,12 @@ This is a React port of [seg](https://github.com/ghalestrilo/seg) which aims to 
 - [ ] Scene editor prototype (Button + Modal + Form)
   - Edit scene
   - Edit channel command
-- [ ] Save / Load files
+- [x] Save / Load files
 - [ ] Keyboard Navigation + commands
 - [ ] Implement socket-based webapp-server communication
   - Deprecate HTTP (axios + express) implementation
   - Use this to push data to the `<Console />` component for real-time feedback
-- [ ] Implement a proper code editor using [CodeMirror 6](https://codemirror.net/6/) (or another library)
+- [x] Implement a proper code editor using [CodeMirror 6](https://codemirror.net/6/) (or another library)
 
 Stretch goals
 
