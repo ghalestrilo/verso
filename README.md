@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# Seg (React port)
 
 This is a React port of [seg](https://github.com/ghalestrilo/seg) which aims to be easier to use and more inclusive to the developer community.
 
