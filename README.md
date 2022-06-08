@@ -32,3 +32,10 @@ To run the project (as of today), you must start the `webapp` as well as the `ba
 
 - `yarn start`: will start the webapp on port localhost:3000
 - `yarn run backend`: will start the repl HTTP server
+
+Use the following environment variables to control the behavior of seg:
+
+- `SEG_HOST_INTERNAL` - (untested) Change this to modify the host where `backend` is expected to be running
+- `SEG_PORT_INTERNAL` - Change this to modify the port SEG uses to communicate (used by both webapp and backend)
+- `SEG_PROJECT_FOLDER` - This should point to a folder containing your compositions / tidalcycles files
+- `SEG_TEST_FILE` - This should point to a valid file to be opened as the program boots
