@@ -12,6 +12,7 @@
     "@uiw/react-codemirror": "^4.7.0",
     "axios": "^0.27.2",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
     "jest": "^28.0.3",
     "klaw-sync": "^6.0.0",
     "peggy": "^1.2.0",
@@ -32,7 +33,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "gen": "yarn run peggy -o src/lang/tidal/parser.js src/lang/tidal/parser.peggy",
-    "backend": "SEG_PROJECT_FOLDER=~/git/pieces SEG_CARABINER_BIN=~/Downloads/Carabiner_Linux_x64 node src/web/backend.js",
+    "backend": "node src/web/backend.js",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
