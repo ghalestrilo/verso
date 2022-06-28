@@ -9,7 +9,7 @@ const klawSync = require('klaw-sync')
 
 // Server conig
 const port = process.env?.SEG_PORT_INTERNAL || 4000;
-const projFolder = process.env?.SEG_PROJECT_FOLDER || "~/.seg/projects";
+const projFolder = process.env?.SEG_PROJECT_FOLDER || `${process.env.HOME}/.seg/projects`;
 
 // Configuration for tidal. Generalize this in the future
 const command = "ghci";
@@ -49,11 +49,14 @@ child.stderr.on("data", function (data) {
 });
 
 // SERVER COMMANDS
+const resolveFilename = filename => filename.startsWith('/home')
+  ? filename
+  : `${projFolder}/${filename}`;
 
 // /load : get the contents of received filename
 app.get("/load", (req, res) => {
   const filename = req.query?.filename || "";
-  const fullfilename = filename && `${projFolder}/${filename}`;
+  const fullfilename = resolveFilename(filename)
 
   const data = readFileSync(fullfilename);
 
@@ -74,8 +77,12 @@ app.get("/list", (req, res) => {
 
 // /save : write the received contents to the received filename
 app.post("/save", (req, res) => {
-  const fullfilename =
-    req?.body?.filename && `${projFolder}/${req?.body?.filename}`;
+  const filename = req?.body?.filename || ''
+  if (!filename) {
+    res.status(404)
+    res.send("couldn't write regular file")
+  }
+  const fullfilename = resolveFilename(filename)
 
   const data = req?.body?.data;
 
