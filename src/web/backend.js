@@ -23,30 +23,30 @@ app.use(cors());
 var spawn = require("child_process").spawn;
 const { readFileSync, writeFileSync, readdirSync } = require("fs");
 
-const child = spawn(command, params);
+// const child = spawn(command, params);
 
 // TODO: spawn custom programs (carabiner is just one possible aux program)
 if (process.env?.SEG_CARABINER_BIN) spawn(process.env?.SEG_CARABINER_BIN);
 
-child.on("close", function (code) {
-  console.log("Finished with code " + code);
-});
+// child.on("close", function (code) {
+// console.log("Finished with code " + code);
+// });
 
 var outputBuffer = "";
 
 //spit stdout to screen
-child.stdout.on("data", function (data) {
-  const output = data.toString();
-  process.stdout.write(output);
-  outputBuffer += output;
-});
+// child.stdout.on("data", function (data) {
+// const output = data.toString();
+// process.stdout.write(output);
+// outputBuffer += output;
+// });
 
 //spit stderr to screen
-child.stderr.on("data", function (data) {
-  const output = data.toString();
-  process.stderr.write(output);
-  outputBuffer += output;
-});
+// child.stderr.on("data", function (data) {
+// const output = data.toString();
+// process.stderr.write(output);
+// outputBuffer += output;
+// });
 
 // SERVER COMMANDS
 const resolveFilename = filename => filename.startsWith('/home')
@@ -101,25 +101,26 @@ app.post("/eval", (req, res) => {
   const input = req?.body?.content;
   const command = `${input}\n`;
   console.log(command);
-  const response = input ? child.stdin.write(command) : "nope";
+  // const response = input ? child.stdin.write(command) : "nope";
+  const response = "nope";
   res.send(response);
 });
 
-app.listen(port, () => {
-  console.log(`Seg local server listening on ${port}`);
-});
-
-// const WebSocket = require("ws");
-
-// const wss = new WebSocket.WebSocketServer({ port: 8080 });
-// // const ws = new WebSocket("ws://localhost/seg");
-
-// console.log("started");
-// wss.on("connection", function connection(ws) {
-//   console.log("connected");
-//   ws.on("message", function message(data) {
-//     console.log("received: %s", data);
-//   });
-
-//   ws.send("something");
+// app.listen(port, () => {
+//   console.log(`Seg local server listening on ${port}`);
 // });
+
+const WebSocket = require("ws");
+
+const wss = new WebSocket.WebSocketServer({ port: 8080 });
+// const ws = new WebSocket("wss://localhost:8080");
+
+console.log("\n\n\n\n\n\nstarted\n\n\n\n\n\n");
+wss.on("connection", (ws) => {
+  console.log("connected");
+  ws.on("message", function message(data) {
+    console.log("received: %s", data);
+  });
+
+  ws.send("something");
+});
