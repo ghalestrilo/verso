@@ -390,18 +390,23 @@ function peg$parse(input, options) {
   }
 
   function peg$parsetrack() {
-    var s0, s1, s2;
+    var s0, s1, s2, s3;
 
     s0 = peg$currPos;
     s1 = [];
-    s2 = peg$parsestatement();
+    s2 = peg$parsenewline();
     while (s2 !== peg$FAILED) {
       s1.push(s2);
-      s2 = peg$parsestatement();
+      s2 = peg$parsenewline();
+    }
+    s2 = [];
+    s3 = peg$parsestatement();
+    while (s3 !== peg$FAILED) {
+      s2.push(s3);
+      s3 = peg$parsestatement();
     }
     peg$savedPos = s0;
-    s1 = peg$f0(s1);
-    s0 = s1;
+    s0 = peg$f0(s2);
 
     return s0;
   }

@@ -8,6 +8,10 @@ describe("tidal language support", () => {
     parse(content);
   });
 
+  it("ignores dangling newlines", () => {
+    parse('\n' + content);
+  });
+
   it("parses correct scene count", () => {
     const parsed = parse(content, { trace: true });
     console.log(parsed);
