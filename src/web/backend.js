@@ -23,30 +23,14 @@ app.use(cors());
 var spawn = require("child_process").spawn;
 const { readFileSync, writeFileSync, readdirSync } = require("fs");
 
-// const child = spawn(command, params);
+const child = spawn(command, params);
 
 // TODO: spawn custom programs (carabiner is just one possible aux program)
 if (process.env?.SEG_CARABINER_BIN) spawn(process.env?.SEG_CARABINER_BIN);
 
-// child.on("close", function (code) {
-// console.log("Finished with code " + code);
-// });
-
-var outputBuffer = "";
-
-//spit stdout to screen
-// child.stdout.on("data", function (data) {
-// const output = data.toString();
-// process.stdout.write(output);
-// outputBuffer += output;
-// });
-
-//spit stderr to screen
-// child.stderr.on("data", function (data) {
-// const output = data.toString();
-// process.stderr.write(output);
-// outputBuffer += output;
-// });
+child.on("close", function (code) {
+  console.log("Finished with code " + code);
+});
 
 // SERVER COMMANDS
 const resolveFilename = filename => filename.startsWith('/home')
@@ -118,9 +102,26 @@ const wss = new WebSocket.WebSocketServer({ port: 8080 });
 console.log("\n\n\n\n\n\nstarted\n\n\n\n\n\n");
 wss.on("connection", (ws) => {
   console.log("connected");
-  ws.on("message", function message(data) {
-    console.log("received: %s", data);
+  ws.on("message", function message(input) {
+    const command = `${input.toString()}\n`;
+    child.stdin.write(command)
   });
 
   ws.send("something");
+
+  // spit stdout to screen
+  child.stdout.on("data", function (data) {
+    const output = data.toString();
+    process.stdout.write(output);
+    ws.send(output);
+    console.log(output)
+  });
+
+  // spit stderr to screen
+  child.stderr.on("data", function (data) {
+    const output = data.toString();
+    process.stderr.write(output);
+    ws.send(output);
+    console.log(output)
+  });
 });

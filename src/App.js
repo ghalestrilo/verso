@@ -1,34 +1,17 @@
 import "./App.css";
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import Session from "./pages/Session";
 
-const webSocketServer = "ws://localhost:8080"
+import { useReplState } from "./state/repl";
+
 
 function App() {
-  const [isPaused, setPause] = useState(false);
-  const ws = useRef(null);
+  const { initialize: initializeRepl, close: closeRepl } = useReplState()
 
   useEffect(() => {
-    ws.current = new WebSocket();
-    ws.current.onopen = () => console.log("ws opened");
-    ws.current.onclose = () => console.log("ws closed");
-
-    const wsCurrent = ws.current;
-
-    return () => {
-      wsCurrent.close();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!ws.current) return;
-
-    ws.current.onmessage = e => {
-      if (isPaused) return;
-      const message = JSON.parse(e.data);
-      console.log("e", message);
-    };
-  }, [isPaused]);
+    initializeRepl()
+    return () => closeRepl()
+  }, [initializeRepl, closeRepl]);
 
   return <Session></Session>;
 }
