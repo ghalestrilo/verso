@@ -1,4 +1,3 @@
-import { Text } from "@uiw/react-codemirror";
 import React from "react";
 import { Container, Header, Segment } from "semantic-ui-react";
 import { useReplState } from "../../state/repl";

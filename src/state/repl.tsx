@@ -14,7 +14,7 @@ type State = {
 };
 
 export const useReplState = create<State>((set) => ({
-  output: "This will one day have your console output. Please have faith",
+  output: "",
   socket: null,
   // listeners: []
 
