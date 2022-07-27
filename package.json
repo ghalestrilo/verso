@@ -14,7 +14,6 @@
     "browser-fs-access": "^0.31.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
-    "flok-repl": "^0.4.8",
     "jest": "^28.0.3",
     "klaw-sync": "^6.0.0",
     "peggy": "^1.2.0",
