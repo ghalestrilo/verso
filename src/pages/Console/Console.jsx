@@ -9,7 +9,12 @@ const Console = () => {
     <Segment>
       <Header as={"h3"}>Output</Header>
       <Container style={{ height: 100, overflowY: "scroll" }}>
-        {output.toString()}
+        {output
+          .split("\n")
+          .filter((x) => x)
+          .map((x) => (
+            <p style={{ margin: 0 }}>{x}</p>
+          ))}
       </Container>
     </Segment>
   );

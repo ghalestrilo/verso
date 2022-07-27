@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 var spawn = require("child_process").spawn;
-const { readFileSync, writeFileSync, readdirSync } = require("fs");
+const { readFileSync, writeFileSync } = require("fs");
 
 const child = spawn(command, params);
 
@@ -95,9 +95,7 @@ app.post("/eval", (req, res) => {
 const WebSocket = require("ws");
 
 const wss = new WebSocket.WebSocketServer({ port: 8080 });
-// const ws = new WebSocket("wss://localhost:8080");
 
-console.log("\n\n\n\n\n\nstarted\n\n\n\n\n\n");
 wss.on("connection", (ws) => {
   console.log("connected");
   ws.on("message", function message(input) {

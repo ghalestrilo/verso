@@ -28,7 +28,7 @@ export const useReplState = create<State>((set) => ({
 
         newSocket.onmessage = (message) => {
           console.log(message);
-          state.append(message.data);
+          state.append(`${message.data}`);
         };
       };
       newSocket.onclose = () => console.log("ws closed");
