@@ -90,9 +90,7 @@ app.post("/eval", (req, res) => {
   res.send(response);
 });
 
-// app.listen(port, () => {
-//   console.log(`Seg local server listening on ${port}`);
-// });
+
 
 const WebSocket = require("ws");
 
@@ -107,14 +105,11 @@ wss.on("connection", (ws) => {
     child.stdin.write(command)
   });
 
-  ws.send("something");
-
   // spit stdout to screen
   child.stdout.on("data", function (data) {
     const output = data.toString();
     process.stdout.write(output);
     ws.send(output);
-    console.log(output)
   });
 
   // spit stderr to screen
@@ -122,6 +117,9 @@ wss.on("connection", (ws) => {
     const output = data.toString();
     process.stderr.write(output);
     ws.send(output);
-    console.log(output)
   });
+});
+
+app.listen(port, () => {
+  console.log(`Seg local server listening on ${port}`);
 });

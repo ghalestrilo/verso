@@ -1,11 +1,19 @@
+import { Text } from "@uiw/react-codemirror";
 import React from "react";
-import { Container } from "semantic-ui-react";
+import { Container, Header, Segment } from "semantic-ui-react";
 import { useReplState } from "../../state/repl";
 
 const Console = () => {
   const output = useReplState((state) => state.output);
-  // const output = "haha";
-  return <Container>{output}</Container>;
+  console.log(output);
+  return (
+    <Segment>
+      <Header as={"h3"}>Output</Header>
+      <Container style={{ height: 100, overflowY: "scroll" }}>
+        {output.toString()}
+      </Container>
+    </Segment>
+  );
 };
 
 export default Console;

@@ -15,8 +15,8 @@ const SceneGrid = ({ track }) => {
   const { send: fireScene } = useReplState();
 
   return (
-    <>
-      <Table celled selectable compact fixed>
+    <div style={{ height: 700, overflowY: "scroll" }}>
+      <Table celled selectable compact>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Scene</Table.HeaderCell>
@@ -48,7 +48,7 @@ const SceneGrid = ({ track }) => {
           )}
         </Table.Body>
       </Table>
-    </>
+    </div>
   );
 };
 

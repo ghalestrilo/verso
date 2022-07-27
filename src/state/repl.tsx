@@ -26,17 +26,19 @@ export const useReplState = create<State>((set) => ({
       newSocket.onopen = () => {
         console.log("ws opened");
 
-        newSocket.onmessage = (e) => {
-          const message = JSON.parse(e.data);
-          console.log("e", message);
-          state.append(message);
+        newSocket.onmessage = (message) => {
+          console.log(message);
+          state.append(message.data);
         };
       };
       newSocket.onclose = () => console.log("ws closed");
       return { ...state, socket: newSocket };
     }),
   append: (message) =>
-    set((state) => ({ ...state, output: state.output + message })),
+    set((state) => ({
+      ...state,
+      output: state.output + message,
+    })),
   send: (message) =>
     set((state) => {
       if (state.socket) state.socket.send(message);

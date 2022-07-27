@@ -5,9 +5,11 @@ import {
   Container,
   Divider,
   Grid,
+  Header,
   List,
   Menu,
   Modal,
+  Segment,
 } from "semantic-ui-react";
 import { useProjectsState } from "../state/projects";
 import { useTrackState } from "../state/track";
@@ -81,27 +83,26 @@ const SessionPage = () => {
 
   return (
     <Container fluid style={{ padding: "2rem" }}>
-      <Menu fixed="top" secondary style={{}}>
-        <Menu.Item as={"h1"}>{track?.name}</Menu.Item>
+      <Menu secondary size="tiny" fluid compact>
+        <Menu.Item>
+          <Header as={"h1"}>{track?.name}</Header>
+        </Menu.Item>
         <Menu.Item position="right">
-          <ButtonGroup>
+          <ButtonGroup size="tiny">
             <Button onClick={() => saveSessionToFile()}>save</Button>
             <ProjectSelectModal />
           </ButtonGroup>
         </Menu.Item>
       </Menu>
-      <Grid columns={2} divided>
+      <Divider />
+      <Grid columns={2} padded>
         <Grid.Column>
-          <Grid.Row>
-            <SceneGrid track={track} />
-          </Grid.Row>
-          <Divider />
-          <Grid.Row>
-            <Console />
-          </Grid.Row>
+          <SceneGrid track={track} />
         </Grid.Column>
         <Grid.Column>
           <Editor />
+          <Divider />
+          <Console />
         </Grid.Column>
       </Grid>
     </Container>
