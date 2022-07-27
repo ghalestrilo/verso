@@ -11,7 +11,7 @@ const Editor = () => {
   return (
     <CodeMirror
       value={raw}
-      height="800px"
+      height="700px"
       extensions={[StreamLanguage.define(haskell)]}
       onChange={(value, viewUpdate) => {
         setTrackData(value);

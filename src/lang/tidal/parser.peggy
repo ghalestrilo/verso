@@ -48,7 +48,7 @@
 // TODO: call structureTrack function
 start = track
 
-track = statements:(statement*) { return structureTrack(statements)}
+track = newline* statements:(statement*) { return structureTrack(statements)}
 
 
 statement = blank? statement:(scene / stray_command / comment) (newline / blank)* { return {

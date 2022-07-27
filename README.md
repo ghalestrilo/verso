@@ -1,23 +1,24 @@
 # Seg (React port)
 
-This is a React port of [seg](https://github.com/ghalestrilo/seg) which aims to be easier to use and more inclusive to the developer community.
+This is a React port of [seg](https://github.com/ghalestrilo/seg) which aims to be easier to use and more inclusive to the general community.
 
 ## MVP Roadmap
 
 - [x] Basic tidal parsing
 - [x] Scene/command grid
 - [x] Parse channel names
-- [ ] Sending commands to the Tidal REPL
+- [x] Sending commands to the Tidal REPL
+- [x] Save / Load files
+- [x] Implement a proper code editor using [CodeMirror 6](https://codemirror.net/6/) (or another library)
+- [x] Implement socket-based webapp-server communication
+  - [x] Use this to push data to the `<Console />` component for real-time feedback
+  - [ ] Deprecate HTTP (axios + express) implementation
+- [ ] Create Gatsby build pipeline
+- [ ] Keyboard Navigation + commands
 - [ ] Buttons for playing scenes and channel commands
 - [ ] Scene editor prototype (Button + Modal + Form)
   - Edit scene
   - Edit channel command
-- [x] Save / Load files
-- [ ] Keyboard Navigation + commands
-- [ ] Implement socket-based webapp-server communication
-  - Deprecate HTTP (axios + express) implementation
-  - Use this to push data to the `<Console />` component for real-time feedback
-- [x] Implement a proper code editor using [CodeMirror 6](https://codemirror.net/6/) (or another library)
 
 Stretch goals
 
@@ -30,9 +31,9 @@ After cloning the repo, install all dependencies by runnin `yarn install`.
 
 Then, copy the file `.env.sample` as `.env` and adjust them accordingly:
 
-* `SEG_PROJECT_FOLDER`: Path to your session files
-* `SEG_CARABINER_BIN`: Path to Carabiner binary
-* `SEG_TIDAL_BOOT_PATH`: Path to TidalCycles bootloading script
+- `SEG_PROJECT_FOLDER`: Path to your session files
+- `SEG_CARABINER_BIN`: Path to Carabiner binary
+- `SEG_TIDAL_BOOT_PATH`: Path to TidalCycles bootloading script
 
 To run the project (as of today), you must start the `webapp` as well as the `backend`. Run the following commands
 
