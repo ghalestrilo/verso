@@ -1,1 +1,0 @@
-web: cd src && yarn gen && yarn start
