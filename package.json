@@ -31,7 +31,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "yarn gen react-scripts build",
+    "build": "yarn gen && react-scripts build",
     "test": "react-scripts test",
     "gen": "yarn run peggy -o src/lang/tidal/parser.js src/lang/tidal/parser.peggy",
     "backend": "node src/web/backend.js",
