@@ -30,8 +30,8 @@
     "zustand": "^4.0.0-rc.1"
   },
   "scripts": {
-    "start": "yarn gen && yarn build && react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts start",
+    "build": "yarn gen react-scripts build",
     "test": "react-scripts test",
     "gen": "yarn run peggy -o src/lang/tidal/parser.js src/lang/tidal/parser.peggy",
     "backend": "node src/web/backend.js",
