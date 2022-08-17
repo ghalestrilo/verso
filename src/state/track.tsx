@@ -1,6 +1,6 @@
 import create from "zustand";
-import { parse } from "../lang/tidal/parser";
 import { loadFile, saveLocalFile } from "../web/api";
+const { parse } = require("../lang/tidal/parser.js");
 
 // const filename = "file:///git/seg-react/src/lang/tidal/song1.hs";
 // const trackfile = window.open(testfile);
