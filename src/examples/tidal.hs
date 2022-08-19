@@ -1,4 +1,5 @@
--- Triangles
+{
+  "data": '-- Triangles
 do
   -- @name triangles
   setcps 2
@@ -27,4 +28,5 @@ do
   d4 $ (note . root . scale "minor") ("{4 5 7 11@4 10@5 9 7 5 8 6 4@4}%3" |+ "[0,2]")
       # s "superpiano"
       # sus 2
-      # lpf 800
+      # lpf 800'
+}

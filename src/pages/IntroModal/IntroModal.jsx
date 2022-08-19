@@ -7,17 +7,12 @@ import {
   ModalHeader,
 } from "semantic-ui-react";
 
-import { repos } from "../../meta";
-
-const codesample = [
-  "do",
-  "  -- @name",
-  'd1 $ slow 2 $ s "bd(3,8) . ~ bd ~ ~"',
-  'd2 "~ sn:2"',
-];
+import { repos, examples } from "../../meta";
+import { useTrackState } from "../../state/track";
 
 const IntroModal = () => {
   const [open, setopen] = useState(true);
+  const { setTrackData } = useTrackState();
 
   return (
     <Modal open={open} closeIcon>
@@ -33,7 +28,7 @@ const IntroModal = () => {
           tidalcycles
         </a>{" "}
         syntax by adding commands to "do" blocks as described below
-        <code>{codesample.join("")}</code>
+        <code>{examples.codeSample.tidal}</code>
         <br />
         These will be automatically organized on the left and you can play them
         by pressing ▶️
@@ -46,6 +41,7 @@ const IntroModal = () => {
         <Button
           onClick={() => {
             setopen(false);
+            setTrackData(examples.fileData.tidal);
           }}
         >
           Load Example
