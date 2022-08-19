@@ -16,6 +16,7 @@ import { useTrackState } from "../state/track";
 import { SEG_TEST_FILE } from "../web/config";
 import Console from "./Console/Console";
 import Editor from "./Editor/Editor";
+import IntroModal from "./IntroModal/IntroModal";
 import SceneGrid from "./SceneGrid/SceneGrid";
 
 const testFile = SEG_TEST_FILE;
@@ -105,6 +106,7 @@ const SessionPage = () => {
           <Console />
         </Grid.Column>
       </Grid>
+      <IntroModal />
     </Container>
   );
 };
