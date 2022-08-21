@@ -119,5 +119,5 @@ wss.on("connection", (ws) => {
 });
 
 app.listen(port, () => {
-  console.log(`Seg local server listening on ${port}`);
+  console.log(`verso backend listening on ${port}`);
 });
