@@ -2,17 +2,10 @@ import React from "react";
 import { Button, Table } from "semantic-ui-react";
 import { useReplState } from "../../state/repl";
 
-// TODO: lang.prepareCommand
-const prepareCommand = (raw) =>
-  `:{\n ${raw
-    .split("\n")
-    .filter((x) => !x.includes("--"))
-    .join("\n")} \n:}`;
-
 const SceneGrid = ({ track }) => {
   const { channels, scenes } = track;
 
-  const { send: fireScene } = useReplState();
+  const { send: fireScene, plugin } = useReplState();
 
   return (
     <div style={{ height: 700, overflowY: "scroll" }}>
@@ -34,7 +27,7 @@ const SceneGrid = ({ track }) => {
                   <Table.Cell>
                     <Button
                       compact
-                      onClick={() => fireScene(prepareCommand(raw))}
+                      onClick={() => fireScene(plugin.prepareCommand(raw))}
                       size="mini"
                       icon="play"
                     ></Button>
