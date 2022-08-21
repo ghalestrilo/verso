@@ -18,7 +18,7 @@ const config: VersoConfig = {
   },
   init: {
     file: env?.VERSO_TEST_FILE || "test.tidal",
-    folder: env?.VERSO_PROJECT_FOLDER || `${env.HOME}/.verso/projects`,
+    folder: env?.VERSO_PROJECT_FOLDER || `${env.HOME || "~"}/.verso/projects`,
   },
 };
 

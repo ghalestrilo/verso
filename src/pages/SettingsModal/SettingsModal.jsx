@@ -8,13 +8,15 @@ const SettingsModal = () => {
   const [open, setOpen] = useState(false);
 
   const settings = useSettingsState();
-
+  console.log(settings);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    settings.updateSettings(data);
+  };
 
   return (
     <Modal
@@ -30,22 +32,34 @@ const SettingsModal = () => {
           <Form>
             <Form.Field>
               <label>Backend Host</label>
-              <input {...register("connHost", { required: true })} />
+              <input
+                defaultValue={settings.conn.host}
+                {...register("conn.host", { required: true })}
+              />
             </Form.Field>
 
             <Form.Field>
               <label>Backend Port</label>
-              <input {...register("connPort", { required: true })} />
+              <input
+                defaultValue={settings.conn.port}
+                {...register("conn.port", { required: true })}
+              />
             </Form.Field>
 
             <Form.Field>
               <label>Initial Folder</label>
-              <input {...register("initFolder", { required: true })} />
+              <input
+                defaultValue={settings.init.folder}
+                {...register("init.folder", { required: true })}
+              />
             </Form.Field>
 
             <Form.Field>
               <label>Initial File</label>
-              <input {...register("initFile", { required: true })} />
+              <input
+                defaultValue={settings.init.file}
+                {...register("init.file", { required: true })}
+              />
             </Form.Field>
           </Form>
         </Modal.Content>
