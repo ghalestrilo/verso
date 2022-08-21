@@ -1,4 +1,6 @@
 import create from "zustand";
+import { VersoLanguagePlugin } from "../lang/plugin";
+import { TidalPlugin } from "../lang/tidal";
 
 const webSocketServer = "ws://localhost:8080";
 
@@ -9,7 +11,9 @@ type State = {
   append: (message: string) => void;
   send: (message: string) => void;
   initialize: () => void;
+  stopPlayback: () => void;
   close: () => void;
+  plugin: VersoLanguagePlugin;
   // listeners: ((data: string) => void)[]
 };
 
@@ -44,9 +48,16 @@ export const useReplState = create<State>((set) => ({
       if (state.socket) state.socket.send(message);
       return state;
     }),
+  stopPlayback: () =>
+    set((state) => {
+      const { prepareCommand, stop } = state.plugin;
+      state.send(prepareCommand(stop));
+      return state;
+    }),
   close: () =>
     set((state) => {
       if (state.socket) state.socket.close();
       return state;
     }),
+  plugin: TidalPlugin,
 }));
