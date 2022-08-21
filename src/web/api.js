@@ -15,7 +15,7 @@ import * as config from "./config";
 
 // export const sendToRepl = (data) => ws.send(data);
 
-const target = `http://${config.SEG_HOST_INTERNAL}:${config.SEG_PORT_INTERNAL}`;
+const target = `http://${config.VERSO_HOST_INTERNAL}:${config.VERSO_PORT_INTERNAL}`;
 
 export const sendToRepl = (content) =>
   axios.post(`${target}/eval`, { content });

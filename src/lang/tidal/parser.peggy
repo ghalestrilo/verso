@@ -58,7 +58,7 @@ statement = blank? statement:(scene / stray_command / comment) (newline / blank)
 
 
 
-// Seg Concepts
+// Verso Concepts
 scene "scene" = "do" statements:(indent @(command / comment / inline_text))* { return processScene(statements) }
 
 command "channel command"

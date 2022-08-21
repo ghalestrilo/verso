@@ -2,9 +2,6 @@ import create from "zustand";
 import { loadFile, saveLocalFile } from "../web/api";
 const { parse } = require("../lang/tidal/parser.js");
 
-// const filename = "file:///git/seg-react/src/lang/tidal/song1.hs";
-// const trackfile = window.open(testfile);
-
 type State = {
   name: string;
   channels: string[];
