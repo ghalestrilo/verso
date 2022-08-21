@@ -93,6 +93,7 @@ const SessionPage = () => {
         <Menu.Item position="right">
           <ButtonGroup size="tiny">
             <SettingsModal />
+            <IntroModal />
             <Button icon="stop" onClick={() => stopPlayback()}></Button>
             <Button onClick={() => saveSessionToFile()}>save</Button>
             <ProjectSelectModal />
@@ -110,7 +111,6 @@ const SessionPage = () => {
           <Console />
         </Grid.Column>
       </Grid>
-      <IntroModal />
     </Container>
   );
 };

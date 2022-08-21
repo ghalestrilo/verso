@@ -15,7 +15,13 @@ const IntroModal = () => {
   const { setTrackData } = useTrackState();
 
   return (
-    <Modal open={open} closeIcon>
+    <Modal
+      open={open}
+      closeIcon
+      trigger={
+        <Button icon="question circle" onClick={() => setopen(true)}></Button>
+      }
+    >
       <ModalHeader>Welcome to Verso!</ModalHeader>
       <ModalContent>
         This is a livecoding editor aimed towards music production (more{" "}
