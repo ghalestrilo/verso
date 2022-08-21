@@ -1,5 +1,5 @@
-export const SEG_HOST_INTERNAL = process.env?.SEG_HOST_INTERNAL || "localhost";
-export const SEG_PORT_INTERNAL = process.env?.SEG_PORT_INTERNAL || 4000;
-export const SEG_TEST_FILE = process.env?.SEG_TEST_FILE || "test.tidal";
-export const SEG_PROJECT_FOLDER =
-  process.env?.SEG_PROJECT_FOLDER || `${process.env.HOME}/.seg/projects`;
+export const VERSO_HOST_INTERNAL = process.env?.VERSO_HOST_INTERNAL || "localhost";
+export const VERSO_PORT_INTERNAL = process.env?.VERSO_PORT_INTERNAL || 4000;
+export const VERSO_TEST_FILE = process.env?.VERSO_TEST_FILE || "test.tidal";
+export const VERSO_PROJECT_FOLDER =
+  process.env?.VERSO_PROJECT_FOLDER || `${process.env.HOME}/.verso/projects`;

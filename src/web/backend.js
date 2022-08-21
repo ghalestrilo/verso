@@ -8,12 +8,12 @@ const path = require("path");
 const klawSync = require('klaw-sync')
 
 // Server conig
-const port = process.env?.SEG_PORT_INTERNAL || 4000;
-const projFolder = process.env?.SEG_PROJECT_FOLDER || `${process.env.HOME}/.seg/projects`;
+const port = process.env?.VERSO_PORT_INTERNAL || 4000;
+const projFolder = process.env?.VERSO_PROJECT_FOLDER || `${process.env.HOME}/.verso/projects`;
 
 // Configuration for tidal. Generalize this in the future
 const command = "ghci";
-const params = ["-ghci-script", process.env?.SEG_TIDAL_BOOT_PATH || "/home/tidal/boot.tidal"];
+const params = ["-ghci-script", process.env?.VERSO_TIDAL_BOOT_PATH || "/home/tidal/boot.tidal"];
 
 // Server setup
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -26,7 +26,7 @@ const { readFileSync, writeFileSync } = require("fs");
 const child = spawn(command, params);
 
 // TODO: spawn custom programs (carabiner is just one possible aux program)
-if (process.env?.SEG_CARABINER_BIN) spawn(process.env?.SEG_CARABINER_BIN);
+if (process.env?.VERSO_CARABINER_BIN) spawn(process.env?.VERSO_CARABINER_BIN);
 
 child.on("close", function (code) {
   console.log("Finished with code " + code);

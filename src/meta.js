@@ -1,5 +1,5 @@
 export const repos = {
-  self: 'https://github.com/ghalestrilo/seg-react',
+  self: 'https://github.com/ghalestrilo/verso',
   tidal: 'https://tidalcycles.org/',
 }
 
@@ -26,10 +26,6 @@ do
     # s "gretsch"
     # lpf 8000
   d2 $ (note . scale "minor") "<2 4 6>@2 <0 2 3>"-- Triangles
-  do
-    -- @name triangles
-    setcps 2
-    # s "supervibe"
   d3 $ (note . scale "minor") ("{0@5 1@4 0@8 1}%3" |- 4 |+ "[-3,0,2,6]")
     # s "virus2"
   d4 $ (note . scale "minor") "{4 5 7 11@4 10@5 9 7 5 8 6 4@4}%3"
