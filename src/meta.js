@@ -7,7 +7,7 @@ export const repos = {
 export const examples = {
   codeSample: {
     tidal: `do
-    -- @name
+    -- @name My Section 1
     d1 $ slow 2 $ s "bd(3,8) . ~ bd ~ ~"
     d2 "~ sn:2"`
   },
@@ -25,7 +25,10 @@ do
     # pan (range (-1) 1 $ rand)
     # s "gretsch"
     # lpf 8000
-  d2 $ (note . scale "minor") "<2 4 6>@2 <0 2 3>"
+  d2 $ (note . scale "minor") "<2 4 6>@2 <0 2 3>"-- Triangles
+  do
+    -- @name triangles
+    setcps 2
     # s "supervibe"
   d3 $ (note . scale "minor") ("{0@5 1@4 0@8 1}%3" |- 4 |+ "[-3,0,2,6]")
     # s "virus2"

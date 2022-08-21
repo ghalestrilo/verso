@@ -16,28 +16,59 @@ const IntroModal = () => {
 
   return (
     <Modal open={open} closeIcon>
-      <ModalHeader>Welcome to Seg!</ModalHeader>
+      <ModalHeader>Welcome to Verso!</ModalHeader>
       <ModalContent>
-        This is a livecoding editor aimed towards music production (read more{" "}
-        <a href={repos.self}>here</a>)
+        This is a livecoding editor aimed towards music production (more{" "}
+        <a rel="noreferrer" target="_blank" href={repos.self}>
+          here
+        </a>
+        )
         <br />
         It organizes your code into blocks so long as you follows a few
-        conventions
+        conventions:
         <br />
-        For example: create new blocks in <a href={repos.tidal}>
-          tidalcycles
-        </a>{" "}
-        syntax by adding commands to "do" blocks as described below
-        <code>{examples.codeSample.tidal}</code>
-        <br />
-        These will be automatically organized on the left and you can play them
-        by pressing ▶️
-        <br />
-        <br />
-        Or get started with an example by clicking below
+        <ul>
+          <li>
+            Create new blocks in{" "}
+            <a rel="noreferrer" target="_blank" href={repos.tidal}>
+              tidalcycles
+            </a>{" "}
+            syntax by adding commands to "do" blocks, as follow:
+            <br />
+            <br />
+            <code style={{ whiteSpace: "pre-wrap" }}>
+              {examples.codeSample.tidal}
+            </code>
+          </li>
+          <li>
+            Using{" "}
+            <a
+              rel="noreferrer"
+              target="_blank"
+              href="https://tidalcycles.org/docs/reference/patterns/#classic-pattern-names"
+            >
+              <code>d1, d2 ...</code> or <code>p "name"</code>
+            </a>{" "}
+            to define channels will create them as separate columns on the grid
+          </li>
+          <li>
+            New blocks will appear as rows. Trigger each one by pressing ▶️
+          </li>
+          <li>Happy Hacking!!</li>
+        </ul>
+        Need help? Get started with an example by clicking "Load Example"
         <br />
       </ModalContent>
       <ModalActions>
+        <Button
+          as={"a"}
+          secondary
+          rel="noreferrer"
+          target="_blank"
+          href={repos.self}
+        >
+          github
+        </Button>
         <Button
           onClick={() => {
             setopen(false);
