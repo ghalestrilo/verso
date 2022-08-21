@@ -10,16 +10,15 @@ import {
   Menu,
   Modal,
 } from "semantic-ui-react";
+import config from "../config/config";
 import { useProjectsState } from "../state/projects";
 import { useReplState } from "../state/repl";
 import { useTrackState } from "../state/track";
-import { VERSO_TEST_FILE } from "../web/config";
 import Console from "./Console/Console";
 import Editor from "./Editor/Editor";
 import IntroModal from "./IntroModal/IntroModal";
 import SceneGrid from "./SceneGrid/SceneGrid";
-
-const testFile = VERSO_TEST_FILE;
+import SettingsModal from "./SettingsModal/SettingsModal";
 
 const ProjectSelectModal = () => {
   const [open, setOpen] = useState(false);
@@ -58,6 +57,8 @@ const ProjectSelectModal = () => {
 };
 
 const SessionPage = () => {
+  const initFile = config.init.file;
+
   const track = useTrackState();
   const { stopPlayback } = useReplState();
 
@@ -73,13 +74,13 @@ const SessionPage = () => {
   useEffect(() => {
     // TODO: Substitute this logic for a splashscreen modal / file loading dialog
     if (raw || loadedTestFile) return;
-    fetch(testFile)
+    fetch(initFile)
       .then((x) => x.text())
       .then((x) => {
-        loadFile(testFile);
+        loadFile(initFile);
         setLoadedTestFile(true);
       });
-  }, [setTrackData, loadFile, raw, loadedTestFile]);
+  }, [setTrackData, loadFile, raw, loadedTestFile, initFile]);
 
   if (!track) return <></>;
 
@@ -91,6 +92,8 @@ const SessionPage = () => {
         </Menu.Item>
         <Menu.Item position="right">
           <ButtonGroup size="tiny">
+            <SettingsModal />
+            <IntroModal />
             <Button icon="stop" onClick={() => stopPlayback()}></Button>
             <Button onClick={() => saveSessionToFile()}>save</Button>
             <ProjectSelectModal />
@@ -108,7 +111,6 @@ const SessionPage = () => {
           <Console />
         </Grid.Column>
       </Grid>
-      <IntroModal />
     </Container>
   );
 };

@@ -4,7 +4,6 @@ import { useReplState } from "../../state/repl";
 
 const Console = () => {
   const output = useReplState((state) => state.output);
-  console.log(output);
   return (
     <Segment>
       <Header as={"h3"}>Output</Header>
