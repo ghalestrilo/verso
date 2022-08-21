@@ -14,7 +14,7 @@ Verso is a grid-based livecoding editor aimed towards music production. Right no
 - [x] Deploy to the web (via eg. heroku / gatsby)
   - [x] Use this to push data to the `<Console />` component for real-time feedback
   - [ ] Deprecate HTTP (axios + express) api
-- [ ] Stop button
+- [x] Stop button
 - [ ] Basic settings (verso port and host)
 - [ ] Keyboard Navigation + commands
 - [ ] Buttons for playing scenes and channel commands

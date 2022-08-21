@@ -1,21 +1,7 @@
-// import WebSocket from "ws";
-
 import axios from "axios";
-import * as config from "./config";
+import config from "../config/config";
 
-// const ws = new WebSocket("ws://localhost", { port: 8000 });
-
-// ws.on("open", function open() {
-//   ws.send("something");
-// });
-
-// ws.on("message", function message(data) {
-//   console.log("received: %s", data);
-// });
-
-// export const sendToRepl = (data) => ws.send(data);
-
-const target = `http://${config.VERSO_HOST_INTERNAL}:${config.VERSO_PORT_INTERNAL}`;
+const target = `http://${config.conn.host}:${config.conn.port}`;
 
 export const sendToRepl = (content) =>
   axios.post(`${target}/eval`, { content });
