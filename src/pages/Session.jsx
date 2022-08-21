@@ -91,7 +91,7 @@ const SessionPage = () => {
         </Menu.Item>
         <Menu.Item position="right">
           <ButtonGroup size="tiny">
-            <Button onClick={() => stopPlayback()}>stop</Button>
+            <Button icon="stop" onClick={() => stopPlayback()}></Button>
             <Button onClick={() => saveSessionToFile()}>save</Button>
             <ProjectSelectModal />
           </ButtonGroup>
