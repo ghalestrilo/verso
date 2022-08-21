@@ -24,7 +24,7 @@ const IntroModal = () => {
         </a>
         )
         <br />
-        It organizes your code into blocks so long as you follows a few
+        It organizes your code into blocks so long as you follow a few
         conventions:
         <br />
         <ul>
