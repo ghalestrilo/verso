@@ -1,6 +1,6 @@
 import create from "zustand";
 import * as api from "../web/api";
-import { VERSO_PROJECT_FOLDER } from "../web/config";
+import config from "../config/config";
 
 type State = {
   list: string[];
@@ -10,7 +10,7 @@ type State = {
 
 export const useProjectsState = create<State>((set) => ({
   list: [],
-  projectFolder: VERSO_PROJECT_FOLDER,
+  projectFolder: config.init.file,
   refreshProjectList: () => {
     api.listProjects().then(({ data }) => {
       console.log(data);
