@@ -8,12 +8,12 @@ const SettingsModal = () => {
   const [open, setOpen] = useState(false);
 
   const settings = useSettingsState();
-  console.log(settings);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({ mode: "onChange" });
   const onSubmit = (data) => {
     settings.updateSettings(data);
   };
@@ -42,7 +42,10 @@ const SettingsModal = () => {
               <label>Backend Port</label>
               <input
                 defaultValue={settings.conn.port}
-                {...register("conn.port", { required: true })}
+                {...register("conn.port", {
+                  required: true,
+                  pattern: /\d+/,
+                })}
               />
             </Form.Field>
 
@@ -65,7 +68,12 @@ const SettingsModal = () => {
         </Modal.Content>
       }
       actions={[
-        <Button type="submit" color="green" onClick={handleSubmit(onSubmit)}>
+        <Button
+          type="submit"
+          color="green"
+          disabled={errors && Object.keys(errors).length > 0}
+          onClick={handleSubmit(onSubmit)}
+        >
           Save
         </Button>,
       ]}
