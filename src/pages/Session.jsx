@@ -9,9 +9,9 @@ import {
   List,
   Menu,
   Modal,
-  Segment,
 } from "semantic-ui-react";
 import { useProjectsState } from "../state/projects";
+import { useReplState } from "../state/repl";
 import { useTrackState } from "../state/track";
 import { VERSO_TEST_FILE } from "../web/config";
 import Console from "./Console/Console";
@@ -59,6 +59,7 @@ const ProjectSelectModal = () => {
 
 const SessionPage = () => {
   const track = useTrackState();
+  const { stopPlayback } = useReplState();
 
   const [loadedTestFile, setLoadedTestFile] = useState(false);
 
@@ -90,6 +91,7 @@ const SessionPage = () => {
         </Menu.Item>
         <Menu.Item position="right">
           <ButtonGroup size="tiny">
+            <Button onClick={() => stopPlayback()}>stop</Button>
             <Button onClick={() => saveSessionToFile()}>save</Button>
             <ProjectSelectModal />
           </ButtonGroup>
