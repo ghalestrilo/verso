@@ -15,6 +15,7 @@ import { useProjectsState } from "../state/projects";
 import { useReplState } from "../state/repl";
 import { useTrackState } from "../state/track";
 import Console from "./Console/Console";
+import useSessionControls from "./controls";
 import Editor from "./Editor/Editor";
 import IntroModal from "./IntroModal/IntroModal";
 import SceneGrid from "./SceneGrid/SceneGrid";
@@ -24,6 +25,8 @@ const ProjectSelectModal = () => {
   const [open, setOpen] = useState(false);
   const { list, refreshProjectList } = useProjectsState();
   const track = useTrackState();
+
+  useSessionControls();
 
   return (
     <Modal

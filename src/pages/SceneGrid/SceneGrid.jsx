@@ -1,11 +1,15 @@
 import React from "react";
 import { Button, Table } from "semantic-ui-react";
+import { useControlState } from "../../state/control";
 import { useReplState } from "../../state/repl";
 
 const SceneGrid = ({ track }) => {
   const { channels, scenes } = track;
 
   const { send: fireScene, plugin } = useReplState();
+  const {selection} = useControlState()
+
+  const isSelected = (row,column) => selection.row === row && selection.column === column
 
   return (
     <div style={{ height: 700, overflowY: "scroll" }}>
@@ -21,7 +25,7 @@ const SceneGrid = ({ track }) => {
 
         <Table.Body>
           {scenes.map(
-            ({ meta, actions, raw }) =>
+            ({ meta, actions, raw }, rowIndex) =>
               actions && (
                 <Table.Row>
                   <Table.Cell>
@@ -33,8 +37,8 @@ const SceneGrid = ({ track }) => {
                     ></Button>
                     {meta?.name}
                   </Table.Cell>
-                  {channels.map((channelName) => (
-                    <Table.Cell>{actions[channelName]}</Table.Cell>
+                  {channels.map((channelName, columnIndex) => (
+                    <Table.Cell active={isSelected(rowIndex, columnIndex)}>{actions[channelName]}</Table.Cell>
                   ))}
                 </Table.Row>
               )

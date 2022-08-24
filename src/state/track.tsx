@@ -62,3 +62,6 @@ export const useTrackState = create<State>((set) => ({
   //     },
   //   })),
 }));
+
+
+export type TrackStateType = State;

@@ -64,7 +64,7 @@ const IntroModal = () => {
         </ul>
         Need help? Get started with an example by clicking "Load Example"
         <br />
-      </ModalContent>
+        </ModalContent>
       <ModalActions>
         <Button
           as={"a"}
@@ -72,7 +72,7 @@ const IntroModal = () => {
           rel="noreferrer"
           target="_blank"
           href={repos.self}
-        >
+          >
           github
         </Button>
         <Button
@@ -80,7 +80,7 @@ const IntroModal = () => {
             setopen(false);
             setTrackData(examples.fileData.tidal);
           }}
-        >
+          >
           Load Example
         </Button>
       </ModalActions>
