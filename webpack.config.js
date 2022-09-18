@@ -19,4 +19,10 @@ module.exports = {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
   },
-};
+  resolve: {
+    fallback: {
+      "crypto": require.resolve("browserify-crypto"),
+      "zlib": require.resolve("browserify-zlib")
+    }
+  }
+}

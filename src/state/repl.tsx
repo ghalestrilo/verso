@@ -28,7 +28,7 @@ export const useReplState = create<State>((set) => ({
       if (socket) socket.close();
       const newSocket = new WebSocket(webSocketServer);
       newSocket.onopen = () => {
-        console.log("ws opened");
+        console.log(`repl websocket open on:  ${webSocketServer}`);
 
         newSocket.onmessage = (message) => {
           console.log(message);

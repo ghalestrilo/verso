@@ -12,10 +12,15 @@
     "@uiw/react-codemirror": "^4.7.0",
     "axios": "^0.27.2",
     "browser-fs-access": "^0.31.0",
+    "browserify": "^17.0.0",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "crypto-browserify": "^3.12.0",
     "dotenv": "^16.0.1",
+    "http": "^0.0.1-security",
     "jest": "^28.0.3",
     "klaw-sync": "^6.0.0",
+    "net": "^1.0.2",
     "osc": "^2.4.3",
     "peggy": "^1.2.0",
     "raw-loader": "^4.0.2",
@@ -26,9 +31,14 @@
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.1.2",
     "serve": "^14.0.1",
+    "stream": "^0.0.2",
+    "tls": "^0.0.1",
     "ts-loader": "^9.3.0",
     "typescript": "^4.6.4",
+    "url": "^0.11.0",
     "web-vitals": "^2.1.4",
+    "webaudio": "^1.0.1",
+    "webmidi": "^3.0.21",
     "ws": "^8.8.1",
     "zustand": "^4.0.0-rc.1"
   },
@@ -58,5 +68,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "browser": {
+    "crypto": false
   }
 }
