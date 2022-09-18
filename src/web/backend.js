@@ -118,6 +118,50 @@ wss.on("connection", (ws) => {
   });
 });
 
+
+
+
+
+
+// ----------------------
+var http = require('http');
+var osc = require('osc');
+
+const tcpPort = 7771;
+var oscPort = 7771;
+
+// create WebSocket server
+var server = http.createServer();
+var tidalSocketServer = new WebSocket.Server({ server: server });
+tidalSocketServer.on('connection', function (ws) {
+  var ip = ws.upgradeReq.connection.remoteAddress;
+  console.log("new WebSocket connection from " + ip);
+});
+tidalSocketServer.broadcast = function (data) {
+  for (var i in this.clients) {
+    try {
+      this.clients[i].send(data);
+    }
+    catch (e) {
+      console.log("warning: exception in websocket broadcast");
+    }
+  }
+};
+
+// make it go
+server.listen(tcpPort, function () { console.log('Listening on ' + server.address().port) });
+
+var udp = new osc.UDPPort({ localAddress: "127.0.0.1", localPort: oscPort });
+udp.open();
+udp.on('message', function (m) {
+  var response = JSON.stringify(m);
+  tidalSocketServer.broadcast(response);
+  console.log(response);
+});
+// ----------------------
+
+
+
 app.listen(port, () => {
   console.log(`verso backend listening on ${port}`);
 });

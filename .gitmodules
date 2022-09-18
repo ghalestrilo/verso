@@ -1,3 +1,6 @@
 [submodule "src/submodules/WebDirt"]
 	path = src/submodules/WebDirt
 	url = https://github.com/dktr0/WebDirt
+[submodule "src/webdirt"]
+	path = src/webdirt
+	url = git@github.com:ghalestrilo/WebDirt
