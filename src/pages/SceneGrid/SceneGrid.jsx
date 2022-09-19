@@ -8,7 +8,7 @@ const SceneGrid = ({ track }) => {
   const { send: fireScene, plugin } = useReplState();
 
   return (
-    <div style={{ height: 700, overflowY: "scroll" }}>
+    <div style={{ height: "100%", overflowY: "scroll" }}>
       <Table celled selectable compact>
         <Table.Header>
           <Table.Row>

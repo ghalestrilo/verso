@@ -1,13 +1,20 @@
-import React from "react";
-import { Container, Header, Segment } from "semantic-ui-react";
+import React, { useEffect, useState } from "react";
+import { Container, Header, Segment, Sticky } from "semantic-ui-react";
 import { useReplState } from "../../state/repl";
 
 const Console = () => {
   const output = useReplState((state) => state.output);
+  useEffect(() => {
+    var element = document.getElementById("console-output");
+    element.scrollTop = element.scrollHeight;
+  }, [output]);
   return (
-    <Segment>
+    <div style={{ position: "fixed", bottom: 50 }}>
       <Header as={"h3"}>Output</Header>
-      <Container style={{ height: 100, overflowY: "scroll" }}>
+      <Container
+        id="console-output"
+        style={{ height: 100, overflowY: "scroll" }}
+      >
         {output
           .split("\n")
           .filter((x) => x)
@@ -15,7 +22,7 @@ const Console = () => {
             <p style={{ margin: 0 }}>{x}</p>
           ))}
       </Container>
-    </Segment>
+    </div>
   );
 };
 

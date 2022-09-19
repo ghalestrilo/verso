@@ -9,6 +9,7 @@ import {
   List,
   Menu,
   Modal,
+  Sticky,
 } from "semantic-ui-react";
 import config from "../config/config";
 import { useProjectsState } from "../state/projects";
@@ -87,37 +88,38 @@ const SessionPage = () => {
   if (!track) return <></>;
 
   return (
-    <Container fluid style={{ padding: "2rem" }}>
-      <Menu secondary size="tiny" fluid compact>
-        <Menu.Item>
-          <Header as={"h1"}>{track?.name}</Header>
-        </Menu.Item>
-        <Menu.Item position="right">
-          <ButtonGroup size="tiny">
-            <SettingsModal />
-            <IntroModal />
-            <Button icon="stop" onClick={() => stopPlayback()}></Button>
-            <Button
-              icon="refresh"
-              onClick={() => requestRestart(processes)}
-            ></Button>
-            <Button onClick={() => saveSessionToFile()}>save</Button>
-            <ProjectSelectModal />
-          </ButtonGroup>
-        </Menu.Item>
-      </Menu>
-      <Divider />
-      <Grid columns={2} padded>
-        <Grid.Column>
-          <SceneGrid track={track} />
-        </Grid.Column>
-        <Grid.Column>
-          <Editor />
-          <Divider />
-          <Console />
-        </Grid.Column>
-      </Grid>
-    </Container>
+    <div>
+      <Container fluid style={{ padding: "2rem" }}>
+        <Menu secondary size="tiny" fluid compact>
+          <Menu.Item>
+            <Header as={"h1"}>{track?.name}</Header>
+          </Menu.Item>
+          <Menu.Item position="right">
+            <ButtonGroup size="tiny">
+              <SettingsModal />
+              <IntroModal />
+              <Button icon="stop" onClick={() => stopPlayback()}></Button>
+              <Button
+                icon="refresh"
+                onClick={() => requestRestart(processes)}
+              ></Button>
+              <Button onClick={() => saveSessionToFile()}>save</Button>
+              <ProjectSelectModal />
+            </ButtonGroup>
+          </Menu.Item>
+        </Menu>
+        <Divider />
+        <Grid columns={2} padded style={{ maxHeight: "50%" }}>
+          <Grid.Column>
+            <SceneGrid track={track} />
+          </Grid.Column>
+          <Grid.Column style={{ maxHeight: 700 }}>
+            <Editor />
+          </Grid.Column>
+        </Grid>
+        <Console />
+      </Container>
+    </div>
   );
 };
 
