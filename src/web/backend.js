@@ -1,7 +1,4 @@
 require('dotenv').config()
-
-
-const create = require('zustand/vanilla').create
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
@@ -71,6 +68,7 @@ const initialize = (processes = []) => {
 app.post("/start", (req, res) => {
   const processes = req.body?.processes || ''
   initialize(JSON.parse(processes))
+  res.send()
 })
 
 // /load : get the contents of received filename
@@ -151,7 +149,7 @@ wss.on("connection", (ws) => {
 var http = require('http');
 var osc = require('osc');
 
-const tcpPort = 7771;
+const tcpPort = 8082;
 var oscPort = 7771;
 
 // create WebSocket server

@@ -15,8 +15,9 @@ function App() {
   useEffect(() => {
     console.log(processes)
     initializeRepl(processes)
+    initializeSound()
     return () => closeRepl()
-  }, [initializeRepl, closeRepl, processes]);
+  }, [initializeRepl, closeRepl, processes, initializeSound]);
 
   return <Session></Session>;
 }

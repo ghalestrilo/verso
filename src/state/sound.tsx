@@ -1,27 +1,30 @@
 import create from "zustand";
-import { VersoLanguagePlugin } from "../lang/plugin";
-import { TidalPlugin } from "../lang/tidal";
+// import webpacked library
+import * as WebDirt from "../webdirt/dist/WebDirt-packed";
 
 // subscribe to a TidalSocket over WebSockets, logging is off if withLog == false
 
-const tidalSocketServer = "ws://localhost:8080";
+const tidalSocketServer = "ws://localhost:7771";
 
 type State = {
   socket: any;
+  engine: any;
   initialize: () => void;
   close: () => void;
 };
 
 export const useSoundState = create<State>((set) => ({
   socket: null,
-  initialize: () =>
+  engine: null,
+  initialize: async () =>
     set((state) => {
+      const newEngine = state.engine || new (WebDirt as any).WebDirt({});
+      console.log(newEngine);
       const { socket } = state;
       if (socket) socket.close();
-      const newSocket = (WebDirt as any).subscribeToTidalSocket(
-        tidalSocketServer
-      );
-      return { ...state, socket: newSocket };
+      newEngine.initializeWebAudio();
+      newEngine.subscribeToTidalSocket(tidalSocketServer);
+      return { ...state, engine: newEngine };
     }),
   close: () =>
     set((state) => {
