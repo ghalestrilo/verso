@@ -4,16 +4,19 @@ import Session from "./pages/Session";
 
 import { useReplState } from "./state/repl";
 import { useSoundState } from "./state/sound";
+import { useSettingsState } from "./state/settings";
 
 
 function App() {
+  const { processes } = useSettingsState()
   const { initialize: initializeRepl, close: closeRepl } = useReplState()
   const { initialize: initializeSound } = useSoundState()
 
   useEffect(() => {
-    initializeRepl()
+    console.log(processes)
+    initializeRepl(processes)
     return () => closeRepl()
-  }, [initializeRepl, closeRepl]);
+  }, [initializeRepl, closeRepl, processes]);
 
   return <Session></Session>;
 }
