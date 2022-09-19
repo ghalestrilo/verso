@@ -19,7 +19,7 @@ const processes = [
     name: 'tidal',
     command: "stack",
     // params: ["-ghci-script", process.env?.VERSO_TIDAL_BOOT_PATH || "/home/tidal/boot.tidal"]
-    params: ["exec", "ghci", "--", "-ghci-script", "~/git/libtidal/boot.tidal"]
+    params: ["exec", "ghci", "--", "-ghci-script", "/Users/admin/git/libtidal/boot.tidal"]
   }
 ]
 
