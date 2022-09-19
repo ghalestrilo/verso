@@ -1,7 +1,6 @@
 import create from "zustand";
 import { VersoLanguagePlugin } from "../lang/plugin";
 import { TidalPlugin } from "../lang/tidal";
-import WebDirt from "../webdirt/WebDirt";
 
 // subscribe to a TidalSocket over WebSockets, logging is off if withLog == false
 
