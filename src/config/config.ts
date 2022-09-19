@@ -39,6 +39,7 @@ const config: VersoConfig = {
         "/Users/admin/git/libtidal/boot.tidal",
       ],
     },
+    { name: "carabiner", command: "/Applications/Carabiner", params: [] },
   ],
 };
 

@@ -13,6 +13,7 @@ import {
 import config from "../config/config";
 import { useProjectsState } from "../state/projects";
 import { useReplState } from "../state/repl";
+import { useSettingsState } from "../state/settings";
 import { useTrackState } from "../state/track";
 import Console from "./Console/Console";
 import Editor from "./Editor/Editor";
@@ -60,7 +61,8 @@ const SessionPage = () => {
   const initFile = config.init.file;
 
   const track = useTrackState();
-  const { stopPlayback } = useReplState();
+  const { stopPlayback, requestRestart } = useReplState();
+  const { processes } = useSettingsState();
 
   const [loadedTestFile, setLoadedTestFile] = useState(false);
 
@@ -95,6 +97,10 @@ const SessionPage = () => {
             <SettingsModal />
             <IntroModal />
             <Button icon="stop" onClick={() => stopPlayback()}></Button>
+            <Button
+              icon="refresh"
+              onClick={() => requestRestart(processes)}
+            ></Button>
             <Button onClick={() => saveSessionToFile()}>save</Button>
             <ProjectSelectModal />
           </ButtonGroup>

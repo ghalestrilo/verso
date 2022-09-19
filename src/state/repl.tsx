@@ -13,6 +13,7 @@ type State = {
   append: (message: string) => void;
   send: (message: string) => void;
   initialize: (processes: ClientChildProcess[]) => void;
+  requestRestart: (processes: ClientChildProcess[]) => void;
   stopPlayback: () => void;
   close: () => void;
   plugin: VersoLanguagePlugin;
@@ -41,6 +42,7 @@ export const useReplState = create<State>((set) => ({
       startProcesses(processes);
       return { ...state, socket: newSocket };
     }),
+  requestRestart: (processes) => startProcesses(processes),
   append: (message) =>
     set((state) => ({
       ...state,
