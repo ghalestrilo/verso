@@ -1,6 +1,8 @@
 import create from "zustand";
+import { ClientChildProcess } from "../config/config";
 import { VersoLanguagePlugin } from "../lang/plugin";
 import { TidalPlugin } from "../lang/tidal";
+import { startProcesses } from "../web/api";
 
 const webSocketServer = "ws://localhost:8080";
 
@@ -10,7 +12,7 @@ type State = {
 
   append: (message: string) => void;
   send: (message: string) => void;
-  initialize: () => void;
+  initialize: (processes: ClientChildProcess[]) => void;
   stopPlayback: () => void;
   close: () => void;
   plugin: VersoLanguagePlugin;
@@ -22,7 +24,7 @@ export const useReplState = create<State>((set) => ({
   socket: null,
   // listeners: []
 
-  initialize: () =>
+  initialize: (processes = []) =>
     set((state) => {
       const { socket } = state;
       if (socket) socket.close();
@@ -36,6 +38,7 @@ export const useReplState = create<State>((set) => ({
         };
       };
       newSocket.onclose = () => console.log("ws closed");
+      startProcesses(processes);
       return { ...state, socket: newSocket };
     }),
   append: (message) =>

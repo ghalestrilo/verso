@@ -14,14 +14,11 @@ const spawn = require("child_process").spawn;
 const port = process.env?.VERSO_PORT_INTERNAL || 4000;
 const projFolder = process.env?.VERSO_PROJECT_FOLDER || `${process.env.HOME}/.verso/projects`;
 
-const processes = [
-  {
-    name: 'tidal',
-    command: "stack",
-    // params: ["-ghci-script", process.env?.VERSO_TIDAL_BOOT_PATH || "/home/tidal/boot.tidal"]
-    params: ["exec", "ghci", "--", "-ghci-script", "/Users/admin/git/libtidal/boot.tidal"]
-  }
-]
+// Server State
+var repl = null
+var childProcesses = {}
+var versoWS = null
+
 
 // Server setup
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -36,10 +33,26 @@ const resolveFilename = filename => filename.startsWith('/home')
   ? filename
   : `${projFolder}/${filename}`;
 
-var repl = null
-var childProcesses = {}
+const bindSTDOUT = (replProcess) => {
+  if (!replProcess) return
+  // spit stdout to screen
+  repl && repl.stdout.on("data", function (data) {
+    const output = data.toString();
+    process.stdout.write(output);
+    versoWS && versoWS.send(output);
+  });
 
-const initialize = () => {
+  // spit stderr to screen
+  repl && repl.stderr.on("data", function (data) {
+    const output = data.toString();
+    process.stderr.write(output);
+    versoWS && versoWS.send(output);
+  });
+}
+
+
+
+const initialize = (processes = []) => {
   Object.entries(childProcesses).forEach(([name, child]) => {
     child.kill('SIGHUP');
   })
@@ -52,10 +65,12 @@ const initialize = () => {
     });
   })
   repl = childProcesses["tidal"]
+  bindSTDOUT(repl)
 }
 
 app.post("/start", (req, res) => {
-  initialize()
+  const processes = req.body?.processes || ''
+  initialize(JSON.parse(processes))
 })
 
 // /load : get the contents of received filename
@@ -118,26 +133,13 @@ const WebSocket = require("ws");
 const wss = new WebSocket.WebSocketServer({ port: 8080 });
 
 wss.on("connection", (ws) => {
+  versoWS = ws
   console.log("connected");
-  initialize()
   ws.on("message", function message(input) {
     const command = `${input.toString()}\n`;
     repl && repl.stdin.write(command)
   });
-
-  // spit stdout to screen
-  repl && repl.stdout.on("data", function (data) {
-    const output = data.toString();
-    process.stdout.write(output);
-    ws.send(output);
-  });
-
-  // spit stderr to screen
-  repl && repl.stderr.on("data", function (data) {
-    const output = data.toString();
-    process.stderr.write(output);
-    ws.send(output);
-  });
+  bindSTDOUT(repl)
 });
 
 app.listen(port, () => {

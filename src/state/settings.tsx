@@ -15,7 +15,7 @@ const getInitialConfig = () => {
   try {
     previousSettings = JSON.parse(previousSettingsString);
   } catch {}
-  return previousSettings || config;
+  return { ...config, ...previousSettings };
 };
 
 export const useSettingsState = create<State>((set) => ({
