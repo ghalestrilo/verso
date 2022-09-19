@@ -71,6 +71,7 @@ const initialize = (processes = []) => {
 app.post("/start", (req, res) => {
   const processes = req.body?.processes || ''
   initialize(JSON.parse(processes))
+  res.send()
 })
 
 // /load : get the contents of received filename
