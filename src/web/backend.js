@@ -1,41 +1,62 @@
 require('dotenv').config()
 
+
+const create = require('zustand/vanilla').create
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
 const klawSync = require('klaw-sync')
+const spawn = require("child_process").spawn;
 
-// Server conig
+// Server config
 const port = process.env?.VERSO_PORT_INTERNAL || 4000;
 const projFolder = process.env?.VERSO_PROJECT_FOLDER || `${process.env.HOME}/.verso/projects`;
 
-// Configuration for tidal. Generalize this in the future
-const command = "ghci";
-const params = ["-ghci-script", process.env?.VERSO_TIDAL_BOOT_PATH || "/home/tidal/boot.tidal"];
+const processes = [
+  {
+    name: 'tidal',
+    command: "stack",
+    // params: ["-ghci-script", process.env?.VERSO_TIDAL_BOOT_PATH || "/home/tidal/boot.tidal"]
+    params: ["exec", "ghci", "--", "-ghci-script", "~/git/libtidal/boot.tidal"]
+  }
+]
 
 // Server setup
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-var spawn = require("child_process").spawn;
+
 const { readFileSync, writeFileSync } = require("fs");
-
-const child = spawn(command, params);
-
-// TODO: spawn custom programs (carabiner is just one possible aux program)
-if (process.env?.VERSO_CARABINER_BIN) spawn(process.env?.VERSO_CARABINER_BIN);
-
-child.on("close", function (code) {
-  console.log("Finished with code " + code);
-});
 
 // SERVER COMMANDS
 const resolveFilename = filename => filename.startsWith('/home')
   ? filename
   : `${projFolder}/${filename}`;
+
+var repl = null
+var childProcesses = {}
+
+const initialize = () => {
+  Object.entries(childProcesses).forEach(([name, child]) => {
+    child.kill('SIGHUP');
+  })
+  childProcesses = Object.fromEntries(
+    processes.map(({ name, command, params }) => [name, spawn(command, params)])
+  )
+  Object.entries(childProcesses).forEach(([name, child]) => {
+    child.on("close", function (code) {
+      console.log("Finished with code " + code);
+    });
+  })
+  repl = childProcesses["tidal"]
+}
+
+app.post("/start", (req, res) => {
+  initialize()
+})
 
 // /load : get the contents of received filename
 app.get("/load", (req, res) => {
@@ -98,20 +119,21 @@ const wss = new WebSocket.WebSocketServer({ port: 8080 });
 
 wss.on("connection", (ws) => {
   console.log("connected");
+  initialize()
   ws.on("message", function message(input) {
     const command = `${input.toString()}\n`;
-    child.stdin.write(command)
+    repl && repl.stdin.write(command)
   });
 
   // spit stdout to screen
-  child.stdout.on("data", function (data) {
+  repl && repl.stdout.on("data", function (data) {
     const output = data.toString();
     process.stdout.write(output);
     ws.send(output);
   });
 
   // spit stderr to screen
-  child.stderr.on("data", function (data) {
+  repl && repl.stderr.on("data", function (data) {
     const output = data.toString();
     process.stderr.write(output);
     ws.send(output);
