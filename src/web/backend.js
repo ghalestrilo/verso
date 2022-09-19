@@ -33,17 +33,17 @@ const resolveFilename = filename => filename.startsWith('/home')
   ? filename
   : `${projFolder}/${filename}`;
 
-const bindSTDOUT = (replProcess) => {
+const bindReplSTDOUT = (replProcess) => {
   if (!replProcess) return
   // spit stdout to screen
-  repl && repl.stdout.on("data", function (data) {
+  replProcess && replProcess.stdout.on("data", function (data) {
     const output = data.toString();
     process.stdout.write(output);
     versoWS && versoWS.send(output);
   });
 
   // spit stderr to screen
-  repl && repl.stderr.on("data", function (data) {
+  replProcess && replProcess.stderr.on("data", function (data) {
     const output = data.toString();
     process.stderr.write(output);
     versoWS && versoWS.send(output);
@@ -65,7 +65,7 @@ const initialize = (processes = []) => {
     });
   })
   repl = childProcesses["tidal"]
-  bindSTDOUT(repl)
+  bindReplSTDOUT(repl)
 }
 
 app.post("/start", (req, res) => {
@@ -139,7 +139,7 @@ wss.on("connection", (ws) => {
     const command = `${input.toString()}\n`;
     repl && repl.stdin.write(command)
   });
-  bindSTDOUT(repl)
+  bindReplSTDOUT(repl)
 });
 
 app.listen(port, () => {
