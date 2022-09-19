@@ -1,3 +1,9 @@
+export type ClientChildProcess = {
+  name: string;
+  command: string;
+  params: string[];
+};
+
 export type VersoConfig = {
   conn: {
     host: string;
@@ -7,6 +13,7 @@ export type VersoConfig = {
     file: string;
     folder: string;
   };
+  processes: ClientChildProcess[];
 };
 
 const env = process.env || {};
@@ -20,6 +27,19 @@ const config: VersoConfig = {
     file: env?.VERSO_TEST_FILE || "test.tidal",
     folder: env?.VERSO_PROJECT_FOLDER || `${env.HOME || "~"}/.verso/projects`,
   },
+  processes: [
+    {
+      name: "tidal",
+      command: "stack",
+      params: [
+        "exec",
+        "ghci",
+        "--",
+        "-ghci-script",
+        "/Users/admin/git/libtidal/boot.tidal",
+      ],
+    },
+  ],
 };
 
 export default config;

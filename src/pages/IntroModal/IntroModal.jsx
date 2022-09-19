@@ -11,16 +11,14 @@ import { repos, examples } from "../../meta";
 import { useTrackState } from "../../state/track";
 
 const IntroModal = () => {
-  const [open, setopen] = useState(true);
   const { setTrackData } = useTrackState();
 
   return (
     <Modal
-      open={open}
+      defaultOpen
       closeIcon
-      trigger={
-        <Button icon="question circle" onClick={() => setopen(true)}></Button>
-      }
+      closeOnDocumentClick
+      trigger={<Button icon="question circle"></Button>}
     >
       <ModalHeader>Welcome to Verso!</ModalHeader>
       <ModalContent>
@@ -77,7 +75,6 @@ const IntroModal = () => {
         </Button>
         <Button
           onClick={() => {
-            setopen(false);
             setTrackData(examples.fileData.tidal);
           }}
         >
