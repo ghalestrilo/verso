@@ -33,21 +33,27 @@ const resolveFilename = filename => filename.startsWith('/home')
   ? filename
   : `${projFolder}/${filename}`;
 
-const bindReplSTDOUT = (replProcess) => {
+var outputBuffer = {}
+const writeBuf = (processName, output) => {
+  outputBuffer[processName] = (outputBuffer[processName] || processName) + output
+}
+const stdoutSend = replProcessName => data => {
+  const output = data.toString();
+  process.stdout.write(output);
+  writeBuf(replProcessName, output)
+  if (versoWS && outputBuffer[replProcessName].includes("\n")) {
+    const outputLines = outputBuffer[replProcessName].split('\n')
+    outputBuffer[replProcessName] = outputLines.slice(-1)
+    versoWS.send(outputLines.slice(0, -1).join('\n'));
+  }
+}
+const bindReplSTDOUT = (replProcess, replProcessName) => {
   if (!replProcess) return
   // spit stdout to screen
-  replProcess && replProcess.stdout.on("data", function (data) {
-    const output = data.toString();
-    process.stdout.write(output);
-    versoWS && versoWS.send(output);
-  });
+  replProcess && replProcess.stdout.on("data", stdoutSend(replProcessName));
 
   // spit stderr to screen
-  replProcess && replProcess.stderr.on("data", function (data) {
-    const output = data.toString();
-    process.stderr.write(output);
-    versoWS && versoWS.send(output);
-  });
+  replProcess && replProcess.stderr.on("data", stdoutSend(replProcessName));
 }
 
 
