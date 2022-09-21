@@ -44,7 +44,7 @@ const stdoutSend = replProcessName => data => {
   if (versoWS && outputBuffer[replProcessName].includes("\n")) {
     const outputLines = outputBuffer[replProcessName].split('\n')
     outputBuffer[replProcessName] = outputLines.slice(-1)
-    versoWS.send(outputLines.slice(0, -1).join('\n'));
+    versoWS.send(outputLines.slice(0, -1).join('\n') + '\n');
   }
 }
 const bindReplSTDOUT = (replProcess, replProcessName) => {
