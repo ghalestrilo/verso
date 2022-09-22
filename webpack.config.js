@@ -13,6 +13,12 @@ module.exports = {
         test: /\.hs$/i,
         use: "raw-loader",
       },
+      // Relevant bit of config for style loader and css loader:
+      {
+        test: /\.css$/,
+        // the order of `use` is important!
+        use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
+      },
     ],
   },
   output: {

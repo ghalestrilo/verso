@@ -15,6 +15,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "jest": "^28.0.3",
+    "jquery": "^3.6.1",
     "klaw-sync": "^6.0.0",
     "peggy": "^1.2.0",
     "raw-loader": "^4.0.2",
@@ -38,7 +39,8 @@
     "test": "react-scripts test",
     "gen": "yarn run peggy --format es -o src/lang/tidal/parser.js src/lang/tidal/parser.peggy",
     "backend": "node src/web/backend.js",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postinstall": "semantic-ui-css-patch"
   },
   "eslintConfig": {
     "extends": [
@@ -57,5 +59,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@semantic-ui-react/css-patch": "^1.1.2",
+    "css-loader": "^6.7.1",
+    "style-loader": "^3.3.1"
   }
 }
