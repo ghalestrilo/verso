@@ -6,13 +6,14 @@ const Console = () => {
   const { output, send } = useReplState((state) => state);
   const [command, setCommand] = useState("");
   return (
-    <Segment>
+    <Segment style={{ position: "fixed", bottom: 0, width: "100%" }}>
       <Header as={"h3"}>Output</Header>
       <Container
         style={{
           height: 100,
           overflowY: "scroll",
           listStyle: "none",
+          width: "100%",
         }}
       >
         <pre style={{ textWrap: "auto" }}>{output}</pre>

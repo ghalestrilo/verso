@@ -4992,6 +4992,11 @@ get-intrinsic@^1.0.2, get-intrinsic@^1.1.0, get-intrinsic@^1.1.1:
     has "^1.0.3"
     has-symbols "^1.0.1"
 
+get-options@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/get-options/-/get-options-1.2.0.tgz#8b60a6506fbf03301127ef6c2104bf7b4690cd0e"
+  integrity sha512-nxIq5hGry1j9OEzJ0sbvN/A+mO9U0l2BFMeGdsOPl5DPvP51I7mBFN0PMsbM0TDvIDV2mEUPpJqn0Jt/hq05lg==
+
 get-own-enumerable-property-symbols@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/get-own-enumerable-property-symbols/-/get-own-enumerable-property-symbols-3.0.2.tgz#b5fde77f22cbe35f390b4e089922c50bce6ef664"
@@ -5334,6 +5339,11 @@ immer@^9.0.7:
   resolved "https://registry.yarnpkg.com/immer/-/immer-9.0.14.tgz#e05b83b63999d26382bb71676c9d827831248a48"
   integrity sha512-ubBeqQutOSLIFCUBN03jGeOS6a3DoYlSYwYJTa+gSKEZKU5redJIqkIdZ3JVv/4RZpfcXdAWH5zCNLWPRv2WDw==
 
+immutable@^4.0.0-rc.12:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.1.0.tgz#f795787f0db780183307b9eb2091fcac1f6fafef"
+  integrity sha512-oNkuqVTA8jqG1Q6c+UglTOD1xhC1BtjKI7XkCXRkZHrN5m18/XsnUp8Q89GkQO/z+0WjonSvl0FLhDYftp46nQ==
+
 import-fresh@^3.0.0, import-fresh@^3.1.0, import-fresh@^3.2.1:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/import-fresh/-/import-fresh-3.3.0.tgz#37162c25fcb9ebaa2e6e53d5b4d88ce17d9e0c2b"
@@ -5641,6 +5651,16 @@ jake@^10.8.5:
     chalk "^4.0.2"
     filelist "^1.0.1"
     minimatch "^3.0.4"
+
+javascript-terminal@^1.0.3:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/javascript-terminal/-/javascript-terminal-1.1.1.tgz#7d2393f94a9fd6b13a7e4c3bb22e41da95364fde"
+  integrity sha512-Wm0cHZLEEWGECocJP15Vch6jfnJUT0cpRqUKEi6oQHMPe8aJ+++BSVJNINdFF02U2LNLadW6MH96tnc6VsD2mw==
+  dependencies:
+    get-options "^1.2.0"
+    immutable "^4.0.0-rc.12"
+    minimatch "^3.0.4"
+    minimatch-capture "^1.1.0"
 
 jest-changed-files@^27.5.1:
   version "27.5.1"
@@ -6861,6 +6881,13 @@ minimalistic-assert@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/minimalistic-assert/-/minimalistic-assert-1.0.1.tgz#2e194de044626d4a10e7f7fbc00ce73e83e4d5c7"
   integrity sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A==
+
+minimatch-capture@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/minimatch-capture/-/minimatch-capture-1.1.0.tgz#d6c8c2acdba92dc2f66921d8007ed0e42b2f9855"
+  integrity sha512-M7hx1tb2k11eNNc3Qq40Oql6Zpu47O7gYFtrE3KO6TyvdDVNiJ1x1pGY4S+3YylxiOetPUD1U1xyL8pXKz1QIw==
+  dependencies:
+    minimatch "^3.0.4"
 
 minimatch@3.0.4:
   version "3.0.4"
@@ -8192,6 +8219,14 @@ react-scripts@5.0.1:
     workbox-webpack-plugin "^6.4.1"
   optionalDependencies:
     fsevents "^2.3.2"
+
+react-terminal-component@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/react-terminal-component/-/react-terminal-component-1.5.0.tgz#bcbcb75070751cbed3a1764a9f019ea865c26d27"
+  integrity sha512-1axWQjZ+p91PgDaumVMD+juazApXs5M7hcvlS2wUQyhRJS7Q0//YL7cixZQsWdcL7n/f+VPWbsxuxg9H9TeC5g==
+  dependencies:
+    javascript-terminal "^1.0.3"
+    prop-types "^15.7.2"
 
 react@^18.1.0:
   version "18.1.0"

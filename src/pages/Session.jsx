@@ -9,6 +9,7 @@ import {
   List,
   Menu,
   Modal,
+  Segment,
 } from "semantic-ui-react";
 import config from "../config/config";
 import { useProjectsState } from "../state/projects";
@@ -107,16 +108,18 @@ const SessionPage = () => {
         </Menu.Item>
       </Menu>
       <Divider />
-      <Grid columns={2} padded>
-        <Grid.Column>
-          <SceneGrid track={track} />
-        </Grid.Column>
-        <Grid.Column>
-          <Editor />
-          <Divider />
-          <Console />
-        </Grid.Column>
-      </Grid>
+      <div style={{ marginBottom: 200 }}>
+        <Grid columns={2} padded>
+          <Grid.Column>
+            <SceneGrid track={track} />
+          </Grid.Column>
+          <Grid.Column>
+            <Editor />
+            <Divider />
+          </Grid.Column>
+        </Grid>
+      </div>
+      <Console />
     </Container>
   );
 };
