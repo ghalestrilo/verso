@@ -40,6 +40,11 @@ const config: VersoConfig = {
       ],
     },
     { name: "carabiner", command: "/Applications/Carabiner", params: [] },
+    {
+      name: "supercollider",
+      command: "/Applications/SuperCollider.app/Contents/MacOS/sclang",
+      params: [],
+    },
   ],
 };
 
