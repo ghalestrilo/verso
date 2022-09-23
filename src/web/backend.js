@@ -39,12 +39,13 @@ const writeBuf = (processName, output) => {
 }
 const stdoutSend = replProcessName => data => {
   const output = data.toString();
-  process.stdout.write(output);
   writeBuf(replProcessName, output)
   if (versoWS && outputBuffer[replProcessName].includes("\n")) {
     const outputLines = outputBuffer[replProcessName].split('\n')
     outputBuffer[replProcessName] = outputLines.slice(-1)
-    versoWS.send(outputLines.slice(0, -1).join('\n') + '\n');
+    const linetosend = outputLines.slice(0, -1).join('\n') + '\n'
+    versoWS.send(linetosend);
+    process.stdout.write(`${replProcessName} | ${linetosend}`);
   }
 }
 const bindReplSTDOUT = (replProcess, replProcessName) => {
@@ -69,9 +70,8 @@ const initialize = (processes = []) => {
     child.on("close", function (code) {
       console.log("Finished with code " + code);
     });
+    bindReplSTDOUT(child, name)
   })
-  repl = childProcesses["tidal"]
-  bindReplSTDOUT(repl)
 }
 
 app.post("/start", (req, res) => {
