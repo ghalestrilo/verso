@@ -44,7 +44,8 @@ const stdoutSend = replProcessName => data => {
     const outputLines = outputBuffer[replProcessName].split('\n')
     outputBuffer[replProcessName] = outputLines.slice(-1)
     const linetosend = outputLines.slice(0, -1).join('\n') + '\n'
-    versoWS.send(linetosend);
+    // versoWS.send(linetosend);
+    versoWS.send(`${replProcessName} | ${linetosend}`)
     process.stdout.write(`${replProcessName} | ${linetosend}`);
   }
 }
@@ -72,6 +73,7 @@ const initialize = (processes = []) => {
     });
     bindReplSTDOUT(child, name)
   })
+  repl = childProcesses["tidal"]
 }
 
 app.post("/start", (req, res) => {
@@ -146,7 +148,7 @@ wss.on("connection", (ws) => {
     const command = `${input.toString()}\n`;
     repl && repl.stdin.write(command)
   });
-  bindReplSTDOUT(repl)
+  // bindReplSTDOUT(repl)
 });
 
 app.listen(port, () => {
