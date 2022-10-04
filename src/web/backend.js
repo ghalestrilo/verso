@@ -7,6 +7,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
+const os = require("os");
 const klawSync = require('klaw-sync')
 const spawn = require("child_process").spawn;
 
@@ -29,7 +30,7 @@ app.use(cors());
 const { readFileSync, writeFileSync } = require("fs");
 
 // SERVER COMMANDS
-const resolveFilename = filename => filename.startsWith('/home')
+const resolveFilename = filename => filename.startsWith(os.homedir)
   ? filename
   : `${projFolder}/${filename}`;
 
