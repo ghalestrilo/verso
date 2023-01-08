@@ -3,17 +3,19 @@
 	function processScene(statements) {
     const comments = statements.filter(x => x?.comment).map(x => x.comment)
     const actions = statements.filter(x => !(x?.comment || x?.meta))
-    const meta = statements
+    let meta = Object.fromEntries(statements
       .filter(x => x?.meta)
       .map(x => x.meta)
       .map(metaEntry => Object.entries(metaEntry))
-      .flat()
+      .flat())
+
+    if (meta.colors) meta.colors = Object.fromEntries(meta.colors.trim().split(/\s/).map(x => x.split(':')))
 
     return {
       type: "scene",
       comments,
       actions,
-      meta: Object.fromEntries(meta)
+      meta
     }
   }
 
@@ -62,15 +64,16 @@ statement = blank? statement:(scene / stray_command / comment) (newline / blank)
 scene "scene" = "do" statements:(indent @(command / comment / inline_text))* { return processScene(statements) }
 
 command "channel command"
-    = channel:channel command:inline_text { return {
+    = channel:channel blank command:inline_text { return {
       channel,
       command
     }}
     // = channel parameter* <param-sep space> pattern effect* 
 
-channel = pchannel / dchannel
+channel = pchannel / dchannel / tchannel
 pchannel = "p " name:string { return name }
 dchannel = name:([d] integer) { return name.join('') }
+tchannel = name:([a-z][a-z]) { return name.join('') }
 
 // Basic parsing units
 blank "blank" = $" "+ { return }

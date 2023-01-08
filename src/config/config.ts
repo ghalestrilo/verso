@@ -16,7 +16,7 @@ export type VersoConfig = {
   processes: ClientChildProcess[];
 };
 
-const env = process.env || {};
+const env = process?.env || {};
 
 const config: VersoConfig = {
   conn: {
@@ -24,7 +24,7 @@ const config: VersoConfig = {
     port: env?.VERSO_PORT_INTERNAL || 4000,
   },
   init: {
-    file: env?.VERSO_TEST_FILE || "test.tidal",
+    file: env?.VERSO_TEST_FILE || "include/include.tidal",
     folder: env?.VERSO_PROJECT_FOLDER || `${env.HOME || "~"}/.verso/projects`,
   },
   processes: [
@@ -39,10 +39,9 @@ const config: VersoConfig = {
         "/Users/admin/git/libtidal/boot.tidal",
       ],
     },
-    { name: "carabiner", command: "/Applications/Carabiner", params: [] },
     {
-      name: "supercollider",
-      command: "/Applications/SuperCollider.app/Contents/MacOS/sclang",
+      name: "sclang",
+      command: "sclang",
       params: [],
     },
   ],

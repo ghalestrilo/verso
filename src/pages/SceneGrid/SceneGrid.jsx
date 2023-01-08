@@ -1,47 +1,89 @@
 import React from "react";
-import { Button, Table } from "semantic-ui-react";
-import { useReplState } from "../../state/repl";
+import {
+  Table,
+  Thead,
+  Tbody,
+  Button,
+  Tr,
+  Th,
+  Td,
+  TableContainer,
+  IconButton,
+  Box,
+} from "@chakra-ui/react";
+import { TriangleUpIcon } from "@chakra-ui/icons";
+import styled from "@emotion/styled";
+import { IconPlayerPlay } from "@tabler/icons";
 
-const SceneGrid = ({ track }) => {
+const SceneTable = styled(Table)`
+  td {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    vertical-align: top;
+  }
+  th:not(:first-child),
+  td:not(:first-child),
+  td,
+  th {
+    max-width: 1rem;
+    flex: 1;
+    width: 1fr;
+  }
+`;
+
+const SceneGrid = ({ track, onClickScenePlay, plugin, maxHeight = 700 }) => {
   const { channels, scenes } = track;
 
-  const { send: fireScene, plugin } = useReplState();
-
   return (
-    <div style={{ height: 700, overflowY: "scroll" }}>
-      <Table celled selectable compact>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Scene</Table.HeaderCell>
-            {channels.map((channelName) => (
-              <Table.HeaderCell>{channelName}</Table.HeaderCell>
-            ))}
-          </Table.Row>
-        </Table.Header>
-
-        <Table.Body>
-          {scenes.map(
-            ({ meta, actions, raw }) =>
-              actions && (
-                <Table.Row>
-                  <Table.Cell>
-                    <Button
-                      compact
-                      onClick={() => fireScene(plugin.prepareCommand(raw))}
-                      size="mini"
-                      icon="play"
-                    ></Button>
-                    {meta?.name}
-                  </Table.Cell>
-                  {channels.map((channelName) => (
-                    <Table.Cell>{actions[channelName]}</Table.Cell>
-                  ))}
-                </Table.Row>
-              )
-          )}
-        </Table.Body>
-      </Table>
-    </div>
+    <TableContainer width={"100%"}>
+      <Box overflow="auto" maxHeight={`${maxHeight}px`}>
+        <SceneTable size="sm">
+          <Thead position="sticky" top={0} bgColor="white">
+            <Tr>
+              <Th>Scene</Th>
+              {channels.map((channelName, idx) => (
+                <Th key={`${channelName}_header_${idx}`}>{channelName}</Th>
+              ))}
+            </Tr>
+          </Thead>
+          <Tbody>
+            {scenes.map(
+              ({ meta, actions, raw }, idx) =>
+                actions && (
+                  <Tr key={`${meta?.name}_${idx}`}>
+                    <Td>
+                      {onClickScenePlay && (
+                        <IconButton
+                          size={"xs"}
+                          variant="ghost"
+                          colorScheme="teal"
+                          aria-label="Play scene"
+                          onClick={() =>
+                            onClickScenePlay(plugin.prepareCommand(raw))
+                          }
+                          icon={<IconPlayerPlay size={12} fill />}
+                        />
+                      )}
+                      {meta?.name}
+                    </Td>
+                    {channels.map((channelName) => (
+                      <Td
+                        key={`${channelName}_${idx}`}
+                        background={
+                          meta?.colors?.[channelName] &&
+                          `${meta?.colors?.[channelName]}.100`
+                        }
+                      >
+                        {actions[channelName]}
+                      </Td>
+                    ))}
+                  </Tr>
+                )
+            )}
+          </Tbody>
+        </SceneTable>
+      </Box>
+    </TableContainer>
   );
 };
 

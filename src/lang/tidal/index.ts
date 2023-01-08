@@ -1,7 +1,9 @@
 import { VersoLanguagePlugin } from "../plugin";
+import { parse } from "./parser.js";
 
 export const TidalPlugin: VersoLanguagePlugin = {
-  parse: require("./parser.js"),
+  parse,
+  // parse: require("./parser.js"),
   stop: "hush",
   prepareCommand: (raw) =>
     `:{\n ${raw

@@ -2,55 +2,58 @@ import create from "zustand";
 import { ClientChildProcess } from "../config/config";
 import { VersoLanguagePlugin } from "../lang/plugin";
 import { TidalPlugin } from "../lang/tidal";
-import { startProcesses } from "../web/api";
+import { startProcesses } from "../desktop/api";
+import { Child } from "@tauri-apps/api/shell";
 
 const webSocketServer = "ws://localhost:8080";
 
-type State = {
+export type State = {
   output: string;
-  socket: WebSocket;
+  children: Child[];
+  plugin: VersoLanguagePlugin;
 
-  append: (message: string) => void;
+  bootProcesses: (processes: ClientChildProcess[]) => void;
+  onData: (processName: string, message: string) => void;
+  onError: (processName: string, message: string) => void;
   send: (message: string) => void;
-  initialize: (processes: ClientChildProcess[]) => void;
-  requestRestart: (processes: ClientChildProcess[]) => void;
   stopPlayback: () => void;
   close: () => void;
-  plugin: VersoLanguagePlugin;
-  // listeners: ((data: string) => void)[]
+  setChildren: (children: Child[]) => void;
 };
 
 export const useReplState = create<State>((set) => ({
   output: "",
-  socket: null,
-  // listeners: []
-
-  initialize: (processes = []) =>
+  children: [],
+  onData: (processName, message) =>
     set((state) => {
-      const { socket } = state;
-      if (socket) socket.close();
-      const newSocket = new WebSocket(webSocketServer);
-      newSocket.onopen = () => {
-        console.log("ws opened");
-
-        newSocket.onmessage = (message) => {
-          console.log(message);
-          state.append(`${message.data}`);
-        };
+      return {
+        ...state,
+        output: state.output + "\n" + message,
       };
-      newSocket.onclose = () => console.log("ws closed");
-      startProcesses(processes);
-      return { ...state, socket: newSocket };
     }),
-  requestRestart: (processes) => startProcesses(processes),
-  append: (message) =>
-    set((state) => ({
-      ...state,
-      output: state.output + message,
-    })),
+  onError: (processName, message) =>
+    set((state) => {
+      return {
+        ...state,
+        output: state.output + "\n" + message,
+      };
+    }),
+  setChildren: (children: Child[]) =>
+    set((state) => {
+      state.close();
+      return { ...state, children };
+    }),
+  bootProcesses: (processes) =>
+    set((state) => {
+      startProcesses(processes, state.onData, state.onError).then((children) =>
+        state.setChildren(children)
+      );
+      return state;
+    }),
   send: (message) =>
     set((state) => {
-      if (state.socket) state.socket.send(message);
+      console.log(message);
+      if (state.children.length) state.children[0]?.write(message);
       return state;
     }),
   stopPlayback: () =>
@@ -61,7 +64,10 @@ export const useReplState = create<State>((set) => ({
     }),
   close: () =>
     set((state) => {
-      if (state.socket) state.socket.close();
+      state.children.forEach((process) => {
+        console.log(process);
+        process.kill();
+      });
       return state;
     }),
   plugin: TidalPlugin,

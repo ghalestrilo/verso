@@ -1,11 +1,13 @@
 import create from "zustand";
-import { loadFile, saveLocalFile } from "../web/api";
-const { parse } = require("../lang/tidal/parser.js");
+// import { loadFile, writeToFile } from "../desktop/api";
+import { loadFile, writeToFile } from "../desktop/api.js";
+import { parse } from "../lang/tidal/parser.js";
 
-type State = {
+export type State = {
   name: string;
   channels: string[];
-  raw?: string[] | string;
+  raw?: string;
+  rawLoaded?: string;
   filename: string;
   // selection: {
   //   index: number,
@@ -19,13 +21,18 @@ type State = {
 
 const parseTrack = (data: any) => (state: State) => ({
   ...state,
-  ...parse(data),
+  // ...parse(data),
+  ...(() => {
+    console.log(parse(data));
+    return parse(data);
+  })(),
   raw: data,
 });
 
 export const useTrackState = create<State>((set) => ({
   name: "Filename",
   raw: "",
+  rawLoaded: "",
   filename: "",
   channels: [],
   scenes: [],
@@ -44,13 +51,14 @@ export const useTrackState = create<State>((set) => ({
     loadFile(filename).then(({ data }) =>
       set((state) => ({
         ...parseTrack(data)(state),
+        rawLoaded: data,
         filename,
       }))
     );
   },
   saveSessionToFile: (filename?: string, raw?: string) => {
     set((state) => {
-      saveLocalFile(filename || state.filename, raw || state.raw);
+      writeToFile(filename || state.filename, raw || state.raw);
       return state;
     });
   },

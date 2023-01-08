@@ -1,5 +1,5 @@
 import create from "zustand";
-import * as api from "../web/api";
+import * as api from "../desktop/api";
 import config from "../config/config";
 
 type State = {
