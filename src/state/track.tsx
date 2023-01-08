@@ -3,12 +3,17 @@ import create from "zustand";
 import { loadFile, writeToFile } from "../desktop/api.js";
 import { parse } from "../lang/tidal/parser.js";
 
+export type TrackScene = {
+  actions: any;
+};
+
 export type State = {
   name: string;
   channels: string[];
   raw?: string;
   rawLoaded?: string;
   filename: string;
+  // scenes: [];
   // selection: {
   //   index: number,
   //   data: string,
