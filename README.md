@@ -2,6 +2,8 @@
 
 Verso is a grid-based livecoding workstation for music production and performance. It is language-agnostic and will support any live-coding language provided a compatible plugin. Currently, only [tidalcycles](https://tidalcycles.org/) is available and in very early development.
 
+https://user-images.githubusercontent.com/37638655/211242796-a8c06b6c-5617-4f57-851a-444549a34f0d.mp4
+
 ## MVP Roadmap
 
 The feature roadmap for Verso can be found [here]()
