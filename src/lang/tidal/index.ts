@@ -9,5 +9,5 @@ export const TidalPlugin: VersoLanguagePlugin = {
     `:{\n ${raw
       .split("\n")
       .filter((x) => !x.includes("--"))
-      .join("\n")} \n:}`,
+      .join("\n")} \n:}\n`,
 };

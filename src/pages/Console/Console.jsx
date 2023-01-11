@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { useReplState } from "../../state/repl";
 
 const Console = () => {
-  const { output, send } = useReplState((state) => state);
+  const { output, send, plugin } = useReplState((state) => state);
   const [command, setCommand] = useState("");
 
   return (
@@ -18,51 +18,52 @@ const Console = () => {
       }}
     >
       <Tabs size="sm">
-        <TabList>
-          <Heading size={"sm"} fontWeight="normal">
+        <TabList alignItems={"baseline"}>
+          <Heading size={"sm"} fontWeight="normal" marginRight={"2"}>
             Output
           </Heading>
-          {output.map(({ processName, output }) => (
-            <Tab>{processName}</Tab>
+          {output.map(({ processName }) => (
+            <Tab key={`${processName}-tab`}>{processName}</Tab>
           ))}
         </TabList>
-        <Box
-          style={{
-            height: 100,
-            overflowY: "scroll",
-            listStyle: "none",
-            width: "100%",
-          }}
-        >
-          <TabPanels>
-            {output.map(({ processName, output }) => (
-              <TabPanel>
+        <TabPanels>
+          {output.map(({ processName, output }, index) => (
+            <TabPanel key={`${processName}-output`} padding={0}>
+              <Box
+                style={{
+                  height: 100,
+                  overflowY: "scroll",
+                  listStyle: "none",
+                  width: "100%",
+                }}
+              >
                 <Code
                   size="xs"
                   style={{ whiteSpace: "pre-line", width: "100%" }}
                 >
                   {output}
                 </Code>
-              </TabPanel>
-            ))}
-          </TabPanels>
-        </Box>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            send(command);
-            setCommand("");
-          }}
-        >
-          <Input
-            size="xs"
-            placeholder="command"
-            onInput={(data) => {
-              const newCommand = data.target.value;
-              setCommand(newCommand);
-            }}
-          />
-        </form>
+              </Box>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  send(plugin.prepareCommand(command), index);
+                  setCommand("");
+                }}
+              >
+                <Input
+                  size="xs"
+                  value={command}
+                  placeholder="command"
+                  onInput={(data) => {
+                    const newCommand = data.target.value;
+                    setCommand(newCommand);
+                  }}
+                />
+              </form>
+            </TabPanel>
+          ))}
+        </TabPanels>
       </Tabs>
     </Box>
   );

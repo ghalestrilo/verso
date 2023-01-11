@@ -20,7 +20,7 @@ export type State = {
   bootProcesses: (processes: ClientChildProcess[]) => void;
   onData: (childNumber: number, message: string) => void;
   onError: (childNumber: number, message: string) => void;
-  send: (message: string) => void;
+  send: (message: string, childIndex: number) => void;
   stopPlayback: () => void;
   close: () => void;
   setChildren: (children: Child[]) => void;
@@ -50,25 +50,31 @@ export const useReplState = create<State>((set) => ({
   setChildren: (children: Child[]) =>
     set((state) => {
       state.close();
-      return { ...state, children};
+      return { ...state, children };
     }),
   bootProcesses: (processes) =>
     set((state) => {
       startProcesses(processes, state.onData, state.onError).then((children) =>
         state.setChildren(children)
       );
-      return {...state, output: processes.map(process => ({ processName: process.name, output: ''})) };
+      return {
+        ...state,
+        output: processes.map((process) => ({
+          processName: process.name,
+          output: "",
+        })),
+      };
     }),
-  send: (message) =>
+  send: (message, childIndex) =>
     set((state) => {
-      console.log(message);
-      if (state.children.length) state.children[0]?.write(message);
+      console.log(`sending to ${childIndex}: "${message}"`);
+      if (state.children.length) state.children[childIndex]?.write(message);
       return state;
     }),
   stopPlayback: () =>
     set((state) => {
       const { prepareCommand, stop } = state.plugin;
-      state.send(prepareCommand(stop));
+      state.send(prepareCommand(stop), 0);
       return state;
     }),
   close: () =>
