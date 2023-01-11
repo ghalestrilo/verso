@@ -31,7 +31,7 @@ const registerShortcuts = ({
 
   register("CommandOrControl+S", () => {
     console.log("Save!");
-    track?.raw && writeToFile(track.filename, track.raw);
+    track?.raw && track.saveSessionToFile(track.filename, track.raw);
   });
 
   register("CommandOrControl+Shift+S", () => {

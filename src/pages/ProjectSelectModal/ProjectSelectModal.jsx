@@ -62,6 +62,7 @@ export const ProjectSelectModal = () => {
                 .filter((filename) => filename.includes(filter))
                 .map((filename) => (
                   <ListItem
+                    key={filename}
                     as={MenuItem}
                     onClick={() => {
                       track.loadFile(filename);

@@ -14,12 +14,19 @@ import Console from "./Console/Console";
 // import IntroModal from "./IntroModal/IntroModal";
 // import SettingsModal from "./SettingsModal/SettingsModal";
 
+import { documentDir } from "@tauri-apps/api/path";
+
 const SessionPage = () => {
   // const initFile = config.init.file;
 
   const track = useTrackState();
   useEffect(() => {
-    track.setTrackData(testSong);
+    documentDir().then((documentDirPath) => {
+      console.log(documentDirPath);
+      track.loadFile(
+        `${documentDirPath}verso/projects/sets/groove/2_astro_2.tidal`
+      );
+    });
   }, []);
   const {
     send: fireScene,

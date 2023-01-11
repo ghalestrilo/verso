@@ -1,6 +1,6 @@
 import create from "zustand";
 // import { loadFile, writeToFile } from "../desktop/api";
-import { loadFile, writeToFile } from "../desktop/api.js";
+import { loadFile as apiLoadFile, writeToFile } from "../desktop/api.js";
 import { parse } from "../lang/tidal/parser.js";
 
 export type TrackScene = {
@@ -26,11 +26,9 @@ export type State = {
 
 const parseTrack = (data: any) => (state: State) => ({
   ...state,
-  // ...parse(data),
-  ...(() => {
-    return parse(data);
-  })(),
+  ...parse(data),
   raw: data,
+  rawLoaded: data,
 });
 
 export const useTrackState = create<State>((set) => ({
@@ -52,25 +50,21 @@ export const useTrackState = create<State>((set) => ({
     });
   },
   loadFile: (filename: string) => {
-    loadFile(filename).then(({ data }) =>
+    console.log(filename);
+    apiLoadFile(filename).then(({ data }) =>
       set((state) => ({
         ...parseTrack(data)(state),
-        rawLoaded: data,
         filename,
       }))
     );
   },
   saveSessionToFile: (filename?: string, raw?: string) => {
     set((state) => {
-      writeToFile(filename || state.filename, raw || state.raw);
+      console.debug("saving", state);
+      const filenameToSave = filename || state.filename;
+      const rawToSave = raw || state.raw;
+      writeToFile(filenameToSave, rawToSave);
       return state;
     });
   },
-  // selectScene: (index: number, data: string) =>
-  //   set((state) => ({
-  //     selection: {
-  //       index,
-  //       data,
-  //     },
-  //   })),
 }));
