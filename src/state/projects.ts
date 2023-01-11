@@ -13,7 +13,6 @@ export const useProjectsState = create<State>((set) => ({
   projectFolder: config.init.file,
   refreshProjectList: () => {
     api.listProjects().then(({ data }) => {
-      console.log(data);
       set((state) => ({ ...state, list: data }));
     });
   },

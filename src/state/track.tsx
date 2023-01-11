@@ -28,7 +28,6 @@ const parseTrack = (data: any) => (state: State) => ({
   ...state,
   // ...parse(data),
   ...(() => {
-    console.log(parse(data));
     return parse(data);
   })(),
   raw: data,

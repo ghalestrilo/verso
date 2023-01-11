@@ -64,7 +64,6 @@ export const ProjectSelectModal = () => {
                   <ListItem
                     as={MenuItem}
                     onClick={() => {
-                      console.log(filename);
                       track.loadFile(filename);
                       onClose();
                     }}

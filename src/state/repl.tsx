@@ -80,7 +80,6 @@ export const useReplState = create<State>((set) => ({
   close: () =>
     set((state) => {
       state.children.forEach((process) => {
-        console.log(process);
         process.kill();
       });
       return state;

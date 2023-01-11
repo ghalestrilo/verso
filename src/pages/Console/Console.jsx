@@ -38,6 +38,7 @@ const Console = () => {
                 }}
               >
                 <Code
+                  fontSize={"xs"}
                   size="xs"
                   style={{ whiteSpace: "pre-line", width: "100%" }}
                 >
