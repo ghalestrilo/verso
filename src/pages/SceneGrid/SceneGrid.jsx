@@ -58,9 +58,7 @@ const SceneGrid = ({ track, onClickScenePlay, plugin, maxHeight = 700 }) => {
                           variant="ghost"
                           colorScheme="teal"
                           aria-label="Play scene"
-                          onClick={() =>
-                            onClickScenePlay(plugin.prepareCommand(raw))
-                          }
+                          onClick={() => onClickScenePlay(raw)}
                           icon={<IconPlayerPlay size={12} fill />}
                         />
                       )}

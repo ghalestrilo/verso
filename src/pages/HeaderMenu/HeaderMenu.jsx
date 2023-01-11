@@ -4,11 +4,13 @@ import { Box, ButtonGroup, IconButton, Flex, Heading } from "@chakra-ui/react";
 import { ProjectSelectModal } from "../ProjectSelectModal/ProjectSelectModal";
 import { IconDeviceFloppy, IconReload, IconSquare } from "@tabler/icons";
 import { useSettingsState } from "../../state/settings";
+import { useReplState } from "../../state/repl";
 // import IntroModal from "./IntroModal/IntroModal";
 // import SettingsModal from "./SettingsModal/SettingsModal";
 
 export const HeaderMenu = ({ track, bootProcesses }) => {
   const { processes } = useSettingsState();
+  const { stopPlayback } = useReplState();
   return (
     <Flex direction="row" p={4}>
       <Heading as={"h3"} flex="1">
@@ -19,7 +21,7 @@ export const HeaderMenu = ({ track, bootProcesses }) => {
         {/* <IntroModal /> */}
         <IconButton
           aria-label="Stop"
-          onClick={() => track?.stopPlayback()}
+          onClick={stopPlayback}
           icon={<IconSquare size={18} />}
         />
         <IconButton

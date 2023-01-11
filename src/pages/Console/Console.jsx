@@ -48,7 +48,7 @@ const Console = () => {
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  send(plugin.prepareCommand(command), index);
+                  send(command, index);
                   setCommand("");
                 }}
               >

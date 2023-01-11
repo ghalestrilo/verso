@@ -5,8 +5,6 @@ import { TidalPlugin } from "../lang/tidal";
 import { startProcesses } from "../desktop/api";
 import { Child } from "@tauri-apps/api/shell";
 
-const webSocketServer = "ws://localhost:8080";
-
 export type ProcessOutput = {
   processName: string;
   output: string;
@@ -67,14 +65,16 @@ export const useReplState = create<State>((set) => ({
     }),
   send: (message, childIndex) =>
     set((state) => {
-      console.log(`sending to ${childIndex}: "${message}"`);
-      if (state.children.length) state.children[childIndex]?.write(message);
+      const preparedMessage = state.plugin.prepareCommand(message);
+      console.debug(`sending to ${childIndex}: "${preparedMessage}"`);
+      if (state.children.length)
+        state.children[childIndex]?.write(preparedMessage);
       return state;
     }),
   stopPlayback: () =>
     set((state) => {
       const { prepareCommand, stop } = state.plugin;
-      state.send(prepareCommand(stop), 0);
+      state.send(stop, 0);
       return state;
     }),
   close: () =>

@@ -10,7 +10,7 @@ export type TrackScene = {
 export type State = {
   name: string;
   channels: string[];
-  raw?: string;
+  raw: string;
   rawLoaded?: string;
   filename: string;
   // scenes: [];

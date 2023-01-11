@@ -15,7 +15,6 @@ import Console from "./Console/Console";
 // import SettingsModal from "./SettingsModal/SettingsModal";
 
 const SessionPage = () => {
-  // const track = testTrack;
   // const initFile = config.init.file;
 
   const track = useTrackState();
@@ -30,8 +29,6 @@ const SessionPage = () => {
   } = useReplState();
   // const { processes } = useSettingsState();
 
-  // const [loadedTestFile, setLoadedTestFile] = useState(false);
-
   const {
     setTrackData = () => null,
     saveSessionToFile = () => null,
@@ -39,6 +36,7 @@ const SessionPage = () => {
     loadFile,
   } = track;
 
+  // const [loadedTestFile, setLoadedTestFile] = useState(false);
   // useEffect(() => {
   //   // TODO: Substitute this logic for a splashscreen modal / file loading dialog
   //   if (raw || loadedTestFile) return;
@@ -50,8 +48,6 @@ const SessionPage = () => {
   //     });
   // }, [setTrackData, loadFile, raw, loadedTestFile, initFile]);
 
-  // if (!track) return <></>;
-
   return (
     <Box size={"lg"}>
       <HeaderMenu
@@ -61,46 +57,16 @@ const SessionPage = () => {
         bootProcesses={bootProcesses}
       />
       <SimpleGrid columns={[1, 1, 2]} spacing={10}>
-        <SceneGrid track={track} onClickScenePlay={fireScene} />
+        <SceneGrid
+          track={track}
+          onClickScenePlay={(raw) => fireScene(raw, 0)}
+        />
         <Editor />
         <GridItem>
           <Console />
         </GridItem>
       </SimpleGrid>
     </Box>
-    // <Container fluid style={{ padding: "2rem" }}>
-    //   <Menu secondary size="tiny" fluid compact>
-    //     <MenuItem>
-    //       <Header as={"h1"}>{track?.name}</Header>
-    //     </MenuItem>
-    //     <MenuItem position="right">
-    //       <ButtonGroup size="tiny">
-    //         <SettingsModal />
-    //         <IntroModal />
-    //         <Button icon="stop" onClick={() => stopPlayback()}></Button>
-    //         <Button
-    //           icon="refresh"
-    //           onClick={() => bootProcesses(processes)}
-    //         ></Button>
-    //         <Button onClick={() => saveSessionToFile()}>save</Button>
-    //         <ProjectSelectModal />
-    //       </ButtonGroup>
-    //     </MenuItem>
-    //   </Menu>
-    //   <Divider />
-    //   <div style={{ marginBottom: 200 }}>
-    //     <Grid columns={2} padded>
-    //       <Grid.Column>
-    //         <SceneGrid track={track} />
-    //       </Grid.Column>
-    //       <Grid.Column>
-    // <Editor />
-    //         <Divider />
-    //       </Grid.Column>
-    //     </Grid>
-    //   </div>
-    //   <Console />
-    // </Container>`
   );
 };
 
