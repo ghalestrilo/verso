@@ -8,17 +8,6 @@ const Console = () => {
   const { output, send } = useReplState((state) => state);
   const [command, setCommand] = useState("");
 
-  const outputMock = [
-    {
-      processName: "test1",
-      output,
-    },
-    {
-      processName: "test2",
-      output: output.split("").reverse().join(""),
-    },
-  ];
-
   return (
     <Box
       style={{
@@ -29,6 +18,14 @@ const Console = () => {
       }}
     >
       <Tabs size="sm">
+        <TabList>
+          <Heading size={"sm"} fontWeight="normal">
+            Output
+          </Heading>
+          {output.map(({ processName, output }) => (
+            <Tab>{processName}</Tab>
+          ))}
+        </TabList>
         <Box
           style={{
             height: 100,
@@ -37,16 +34,8 @@ const Console = () => {
             width: "100%",
           }}
         >
-          <TabList>
-            <Heading size={"sm"} fontWeight="normal">
-              Output
-            </Heading>
-            {outputMock.map(({ processName, output }) => (
-              <Tab>{processName}</Tab>
-            ))}
-          </TabList>
           <TabPanels>
-            {outputMock.map(({ processName, output }) => (
+            {output.map(({ processName, output }) => (
               <TabPanel>
                 <Code
                   size="xs"

@@ -30,14 +30,14 @@ export const sendToRepl = (content: any) => null;
 
 export const startProcesses = async (
   processes: ClientChildProcess[],
-  onStdout?: (processName: string, line: string) => void,
-  onStderr?: (processName: string, line: string) => void
+  onStdout?: (childNumber: number, line: string) => void,
+  onStderr?: (childNumber: number, line: string) => void
 ) => {
-  const commands = processes.map((processdef) => {
+  const commands = processes.map((processdef, index) => {
     const command = new Command(processdef.command, processdef.params);
     command.on("error", (error) => console.error(`command error: "${error}"`));
-    command.stdout.on("data", (line) => onStdout?.(processdef.name, line));
-    command.stderr.on("data", (line) => onStderr?.(processdef.name, line));
+    command.stdout.on("data", (line) => onStdout?.(index, line));
+    command.stderr.on("data", (line) => onStderr?.(index, line));
     command.on("close", async (data) => {
       console.log(
         `command finished with code ${data.code} and signal ${data.signal}`

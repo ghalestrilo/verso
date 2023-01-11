@@ -7,14 +7,19 @@ import { Child } from "@tauri-apps/api/shell";
 
 const webSocketServer = "ws://localhost:8080";
 
-export type State = {
+export type ProcessOutput = {
+  processName: string;
   output: string;
+};
+
+export type State = {
+  output: ProcessOutput[];
   children: Child[];
   plugin: VersoLanguagePlugin;
 
   bootProcesses: (processes: ClientChildProcess[]) => void;
-  onData: (processName: string, message: string) => void;
-  onError: (processName: string, message: string) => void;
+  onData: (childNumber: number, message: string) => void;
+  onError: (childNumber: number, message: string) => void;
   send: (message: string) => void;
   stopPlayback: () => void;
   close: () => void;
@@ -22,33 +27,37 @@ export type State = {
 };
 
 export const useReplState = create<State>((set) => ({
-  output: "",
+  output: [],
   children: [],
-  onData: (processName, message) =>
+  onData: (childNumber, message) =>
     set((state) => {
+      let output = state.output;
+      output[childNumber].output += "\n" + message;
       return {
         ...state,
-        output: state.output + "\n" + message,
+        output,
       };
     }),
-  onError: (processName, message) =>
+  onError: (childNumber, message) =>
     set((state) => {
+      let output = state.output;
+      output[childNumber].output += "\n" + message;
       return {
         ...state,
-        output: state.output + "\n" + message,
+        output,
       };
     }),
   setChildren: (children: Child[]) =>
     set((state) => {
       state.close();
-      return { ...state, children };
+      return { ...state, children};
     }),
   bootProcesses: (processes) =>
     set((state) => {
       startProcesses(processes, state.onData, state.onError).then((children) =>
         state.setChildren(children)
       );
-      return state;
+      return {...state, output: processes.map(process => ({ processName: process.name, output: ''})) };
     }),
   send: (message) =>
     set((state) => {
