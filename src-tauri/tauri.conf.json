@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/schema.json",
   "build": {
-    "beforeBuildCommand": "npm run build",
+    "beforeBuildCommand": "npm run buildnocheck",
     "beforeDevCommand": "npm run dev",
     "devPath": "http://localhost:5173",
     "distDir": "../dist"
@@ -67,7 +67,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.verso.dev",
       "longDescription": "",
       "macOS": {
         "entitlements": null,

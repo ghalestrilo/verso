@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "buildnocheck": "vite build",
     "gen": "yarn run peggy --format es -o src/lang/tidal/parser.js src/lang/tidal/parser.peggy",
     "preview": "vite preview"
   },
@@ -23,8 +24,10 @@
     "@tabler/icons": "^1.118.0",
     "@tauri-apps/api": "^1.2.0",
     "@uiw/react-codemirror": "^4.19.4",
+    "debounce": "^1.2.1",
     "dotenv": "^16.0.1",
     "framer-motion": "^7.10.0",
+    "lodash": "^4.17.21",
     "peggy": "^2.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
