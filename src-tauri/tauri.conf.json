@@ -21,6 +21,7 @@
       },
       "fs": {
         "writeFile": true,
+        "exists": true,
         "readDir": true,
         "readFile": true,
         "scope": ["**"]

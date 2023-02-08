@@ -2,7 +2,12 @@
 import config from "../config/config";
 import { dialog, invoke } from "@tauri-apps/api";
 import { open, save } from "@tauri-apps/api/dialog";
-import { readTextFile, writeTextFile, BaseDirectory } from "@tauri-apps/api/fs";
+import {
+  readTextFile,
+  writeTextFile,
+  exists,
+  BaseDirectory,
+} from "@tauri-apps/api/fs";
 import { ClientChildProcess } from "../config/config";
 
 import { Command } from "@tauri-apps/api/shell";
@@ -56,7 +61,8 @@ export const startProcesses = async (
 };
 
 export const loadFile = async (filename = "") => {
-  const data = await readTextFile(filename);
+  const fileExists = await exists(filename);
+  const data = fileExists ? await readTextFile(filename) : "";
   return { data };
 };
 

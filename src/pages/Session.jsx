@@ -16,6 +16,9 @@ import Console from "./Console/Console";
 
 import { documentDir } from "@tauri-apps/api/path";
 
+const lastOpenedFile = (basepath) =>
+  `${basepath}verso/projects/sets/groove/2_astro_2.tidal`;
+
 const SessionPage = () => {
   // const initFile = config.init.file;
 
@@ -23,9 +26,7 @@ const SessionPage = () => {
   useEffect(() => {
     documentDir().then((documentDirPath) => {
       console.log(documentDirPath);
-      track.loadFile(
-        `${documentDirPath}verso/projects/sets/groove/2_astro_2.tidal`
-      );
+      track.loadFile(lastOpenedFile(documentDirPath));
     });
   }, []);
   const {

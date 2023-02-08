@@ -1,6 +1,5 @@
 extern crate shell_words;
-use std::process::Command;
-use std::{collections::HashMap, fs, process::Child, sync::Mutex};
+use std::{collections::HashMap, process::Child, sync::Mutex};
 use tauri::State;
 use walkdir::{DirEntry, WalkDir};
 

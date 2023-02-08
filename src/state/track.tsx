@@ -51,12 +51,14 @@ export const useTrackState = create<State>((set) => ({
   },
   loadFile: (filename: string) => {
     console.log(filename);
-    apiLoadFile(filename).then(({ data }) =>
-      set((state) => ({
-        ...parseTrack(data)(state),
-        filename,
-      }))
-    );
+    apiLoadFile(filename)
+      .then(({ data }) =>
+        set((state) => ({
+          ...parseTrack(data)(state),
+          filename,
+        }))
+      )
+      .catch((err) => alert(err));
   },
   saveSessionToFile: (filename?: string, raw?: string) => {
     set((state) => {
