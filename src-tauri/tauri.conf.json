@@ -21,6 +21,7 @@
       },
       "fs": {
         "writeFile": true,
+        "createDir": true,
         "exists": true,
         "readDir": true,
         "readFile": true,
@@ -68,7 +69,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.verso.dev",
+      "identifier": "verso",
       "longDescription": "",
       "macOS": {
         "entitlements": null,

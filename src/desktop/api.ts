@@ -1,24 +1,31 @@
 // import axios from "axios";
 import config from "../config/config";
 import { dialog, invoke } from "@tauri-apps/api";
+import { appLocalDataDir } from "@tauri-apps/api/path";
 import { open, save } from "@tauri-apps/api/dialog";
 import {
   readTextFile,
   writeTextFile,
   exists,
   BaseDirectory,
+  createDir,
 } from "@tauri-apps/api/fs";
 import { ClientChildProcess } from "../config/config";
 
 import { Command } from "@tauri-apps/api/shell";
-const command = Command.sidecar("my-sidecar");
+// const command = Command.sidecar("my-sidecar");
 // const output = await command.execute();
 
 // now we can call our Command!
 // Right-click the application background and open the developer tools.
 // You will see "Hello, World!" printed in the console!
 
-const initFolder = "/Users/admin/.verso/projects";
+
+
+const initFolder = await appLocalDataDir()
+console.log('appdata', initFolder)
+const initFolderExists = await exists(initFolder)
+if (!initFolderExists) createDir(initFolder, { recursive: true });
 
 const tauriCommand = (command: string, args: any) =>
   invoke(command, args)
