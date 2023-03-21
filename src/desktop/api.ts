@@ -1,7 +1,7 @@
 // import axios from "axios";
 import config from "../config/config";
 import { dialog, invoke } from "@tauri-apps/api";
-import { documentDir } from "@tauri-apps/api/path";
+import { BaseDirectory, documentDir } from "@tauri-apps/api/path";
 import { open, save } from "@tauri-apps/api/dialog";
 import {
   readTextFile,
@@ -13,8 +13,15 @@ import { ClientChildProcess } from "../config/config";
 
 import { Command } from "@tauri-apps/api/shell";
 
-const getVersoProjectDir = () => documentDir().then(initFolder => `${initFolder}/verso`)
-getVersoProjectDir().then(folder => createDir(folder, { recursive: true }))
+export const getVersoProjectDir = () => documentDir().then(initFolder => `${initFolder}verso/projects/`)
+
+// Create Projects folder if it does not exist
+getVersoProjectDir()
+  .then(folder => exists(folder))
+  .then(doesItExist => {
+    if (doesItExist) return
+    createDir('verso/projects', { dir: BaseDirectory.AppData, recursive: true });
+  })
 
 const tauriCommand = (command: string, args: any) =>
   invoke(command, args)
@@ -71,6 +78,9 @@ export const listProjects = () =>
   getVersoProjectDir()
     .then(versoProjectDir => 
       tauriCommand("list_projects", { name: versoProjectDir }))
+    .catch(err => {
+      console.log(err)
+    })
 
 // import { readDir, BaseDirectory } from '@tauri-apps/api/fs';
 // // Reads the `$APPDATA/users` directory recursively

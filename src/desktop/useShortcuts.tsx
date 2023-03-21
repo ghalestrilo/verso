@@ -49,10 +49,14 @@ export const useShortcuts = () => {
   const repl = useReplState();
   const track = useTrackState();
 
+  const unregister = () => {
+    unregisterAll();
+  }
+
   useEffect(() => {
     if (focus === true) registerShortcuts({ repl, track });
     else unregisterAll();
 
-    return () => unregisterAll();
+    return unregister;
   }, [focus]);
 };
