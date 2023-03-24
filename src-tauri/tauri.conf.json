@@ -29,29 +29,6 @@
       },
       "path": {
         "all": true
-      },
-      "shell": {
-        "execute": true,
-        "sidecar": true,
-        "open": true,
-        "scope": [
-          {
-            "name": "stack",
-            "cmd": "stack",
-            "args": [
-              "exec",
-              "ghci",
-              "--",
-              "-ghci-script",
-              "/Users/admin/git/libtidal/boot.tidal"
-            ]
-          },
-          {
-            "name": "sclang",
-            "cmd": "/Applications/SuperCollider.app/Contents/MacOS/sclang",
-            "args": []
-          }
-        ]
       }
     },
     "bundle": {

@@ -47,20 +47,19 @@ export const startProcesses = async (
     command.stdout.on("data", (line) => onStdout?.(index, line));
     command.stderr.on("data", (line) => onStderr?.(index, line));
     command.on("close", async (data) => {
-      console.log(
-        `command finished with code ${data.code} and signal ${data.signal}`
-      );
-      // const output = await command.execute()
-      // console.log("command output:", output);
+      // console.log(
+      //   `command finished with code ${data.code} and signal ${data.signal}`
+      // );
     });
     return command;
   });
-  // const child = await command.spawn();
-  const children = await Promise.all(
-    commands.map((command) => command.spawn().then((child) => child))
-  );
-  console.log("children", children);
-  return children;
+
+  // const children = await Promise.all(
+  //   commands.map((command) => command.spawn().then((child) => child))
+  // );
+  // return children;
+
+  return []
 };
 
 export const loadFile = async (filename = "") => {
@@ -79,7 +78,7 @@ export const listProjects = () =>
     .then(versoProjectDir => 
       tauriCommand("list_projects", { name: versoProjectDir }))
     .catch(err => {
-      console.log(err)
+      // console.log(err)
     })
 
 // import { readDir, BaseDirectory } from '@tauri-apps/api/fs';

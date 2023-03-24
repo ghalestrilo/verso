@@ -55,7 +55,7 @@ const Console = () => {
                 <Input
                   size="xs"
                   value={command}
-                  placeholder="command"
+                  placeholder="> command"
                   onInput={(data) => {
                     const newCommand = data.target.value;
                     setCommand(newCommand);

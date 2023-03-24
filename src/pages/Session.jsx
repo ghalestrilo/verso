@@ -19,7 +19,6 @@ import { getVersoProjectDir } from "../desktop/api";
 import { exists } from "@tauri-apps/api/fs";
 
 const lastOpenedFile = (basepath) => {
-  console.log(`${basepath}sets/groove/2_astro_2.tidal`)
   return `${basepath}sets/groove/2_astro_2.tidal`
 };
 

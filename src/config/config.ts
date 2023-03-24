@@ -16,7 +16,14 @@ export type VersoConfig = {
   processes: ClientChildProcess[];
 };
 
-const env = process?.env || {};
+// const env = process?.env || {};
+const env = {
+  VERSO_HOST_INTERNAL: null,
+  VERSO_PORT_INTERNAL: null,
+  VERSO_TEST_FILE: null,
+  VERSO_PROJECT_FOLDER: null,
+  HOME: null,
+};
 
 const config: VersoConfig = {
   conn: {
@@ -28,22 +35,22 @@ const config: VersoConfig = {
     folder: env?.VERSO_PROJECT_FOLDER || `${env.HOME || "~"}/.verso/projects`,
   },
   processes: [
-    {
-      name: "tidal",
-      command: "stack",
-      params: [
-        "exec",
-        "ghci",
-        "--",
-        "-ghci-script",
-        "/Users/admin/git/libtidal/boot.tidal",
-      ],
-    },
-    {
-      name: "sclang",
-      command: "sclang",
-      params: [],
-    },
+    // {
+    //   name: "tidal",
+    //   command: "stack",
+    //   params: [
+    //     "exec",
+    //     "ghci",
+    //     "--",
+    //     "-ghci-script",
+    //     "/Users/admin/git/libtidal/boot.tidal",
+    //   ],
+    // },
+    // {
+    //   name: "sclang",
+    //   command: "sclang",
+    //   params: [],
+    // },
   ],
 };
 

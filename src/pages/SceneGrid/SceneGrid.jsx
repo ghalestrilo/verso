@@ -40,7 +40,7 @@ const SceneGrid = ({ track, onClickScenePlay, plugin, maxHeight = 700 }) => {
         <SceneTable size="sm">
           <Thead position="sticky" top={0} bgColor="white">
             <Tr>
-              <Th>Scene</Th>
+              <Th minWidth={'6rem'}>Scene</Th>
               {channels.map((channelName, idx) => (
                 <Th key={`${channelName}_header_${idx}`}>{channelName}</Th>
               ))}
