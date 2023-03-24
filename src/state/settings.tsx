@@ -13,7 +13,7 @@ const getInitialConfig = () => {
   );
   let previousSettings = null;
   try {
-    previousSettings = JSON.parse(previousSettingsString);
+    previousSettings = JSON.parse(previousSettingsString || '');
   } catch {}
   return { ...config, ...previousSettings };
 };
