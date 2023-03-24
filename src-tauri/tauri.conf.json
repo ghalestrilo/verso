@@ -29,6 +29,11 @@
       },
       "path": {
         "all": true
+      },
+      "shell": {
+        "execute": true,
+        "sidecar": true,
+        "open": true
       }
     },
     "bundle": {

@@ -50,7 +50,6 @@ export const useTrackState = create<State>((set) => ({
     });
   },
   loadFile: (filename: string) => {
-    // console.log(filename);
     apiLoadFile(filename)
       .then(({ data }) =>
         set((state) => ({

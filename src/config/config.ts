@@ -16,7 +16,8 @@ export type VersoConfig = {
   processes: ClientChildProcess[];
 };
 
-// const env = process?.env || {};
+// None of this is actually needed anymore, only the processes field,
+// which is a user setting and should be moved there
 const env = {
   VERSO_HOST_INTERNAL: null,
   VERSO_PORT_INTERNAL: null,

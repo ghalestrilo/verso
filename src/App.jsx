@@ -10,8 +10,7 @@ const useRepl = () => {
     const { processes } = useSettingsState();
     const { bootProcesses: bootRepl, close: closeRepl } = useReplState();
     useEffect(() => {
-        // console.log(processes);
-        // bootRepl(processes);
+        bootRepl(processes);
         return () => closeRepl();
       }, [bootRepl, closeRepl, processes]);
     };
