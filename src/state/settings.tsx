@@ -1,35 +1,46 @@
 import create from "zustand";
-import config, { VersoConfig } from "../config/config";
+import { getVersoSettingsFile } from "../desktop/api";
+import { ClientChildProcess } from "../util/clientChildProcess";
 
-type State = VersoConfig & {
-  updateSettings: (newSettings: VersoConfig) => void;
+
+
+export type VersoSettings = {
+  processes: ClientChildProcess[];
 };
 
-// const versoSettingsLocalStorageName = "versoSettings";
+const defaultConfig: VersoSettings = {
+  processes: [],
+};
 
-const getInitialConfig = () => {
-  // const previousSettingsString = localStorage.getItem(
-  //   versoSettingsLocalStorageName
+
+type State = {
+  settings: VersoSettings,
+  updateSettings: (newSettings: VersoSettings) => void;
+};
+
+export const useSettingsState = create<State>((set) => {
+  const updateSettings = (newSettings:VersoSettings) => set((state: State) => {
+    return {
+      ...state,
+      settings: newSettings,
+    };
+  })
+
+  // localStorage.setItem(
+  //   versoSettingsLocalStorageName,
+  //   JSON.stringify(state)
   // );
-  // let previousSettings = null;
-  // try {
-  //   previousSettings = JSON.parse(previousSettingsString || '');
-  // } catch {}
-  // return { ...config, ...previousSettings };
-  return config;
-};
 
-export const useSettingsState = create<State>((set) => ({
-  ...getInitialConfig(),
-  updateSettings: (newSettings) =>
-    set((state) => {
-      // localStorage.setItem(
-      //   versoSettingsLocalStorageName,
-      //   JSON.stringify(state)
-      // );
-      return {
-        ...state,
-        ...newSettings,
-      };
-    }),
-}));
+  getVersoSettingsFile(defaultConfig)
+    .then(content => JSON.parse(content || "" as string))
+    .then(content => {
+      console.log(content)
+      set(state => ({ ...state, processes: content.processes || []}))
+    })
+
+  // getVersoSettingsFile().then(content => set())
+  return {
+    settings: defaultConfig,
+    updateSettings
+  }
+})

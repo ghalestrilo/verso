@@ -1,9 +1,10 @@
 import create from "zustand";
-import { ClientChildProcess } from "../config/config";
+// import { ClientChildProcess } from "../config/config";
 import { VersoLanguagePlugin } from "../lang/plugin";
 import { TidalPlugin } from "../lang/tidal";
 import { startProcesses } from "../desktop/api";
 import { Child } from "@tauri-apps/api/shell";
+import { ClientChildProcess } from "../util/clientChildProcess";
 
 export type ProcessOutput = {
   processName: string;

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import config from "../config/config";
 import { useProjectsState } from "../state/projects";
 import { useSettingsState } from "../state/settings";
 import { useReplState } from "../state/repl";
