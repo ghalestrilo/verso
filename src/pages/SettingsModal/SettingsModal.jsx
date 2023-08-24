@@ -1,4 +1,4 @@
-import { Button, Form, Modal } from "semantic-ui-react";
+import { Button, Divider, Form, Modal } from "semantic-ui-react";
 import React, { useState } from "react";
 import { useSettingsState } from "../../state/settings";
 
@@ -62,6 +62,15 @@ const SettingsModal = () => {
               <input
                 defaultValue={settings.init.file}
                 {...register("init.file", { required: true })}
+              />
+            </Form.Field>
+            <Divider />
+            <Form.Field>
+              <label>Processes</label>
+              <input
+                type="textarea"
+                defaultValue={settings.init.file}
+                {...register("processes", { required: true })}
               />
             </Form.Field>
           </Form>

@@ -20,7 +20,7 @@ const command = Command.sidecar("my-sidecar");
 
 const initFolder = "/Users/admin/.verso/projects";
 
-const tauriCommand = (command: string, args: any) =>
+const tauriCommand = (command: string, args: any, defaultReturn = null) =>
   invoke(command, args)
     .then((data) => {
       console.debug(command, { args, data });
@@ -28,7 +28,7 @@ const tauriCommand = (command: string, args: any) =>
     })
     .catch((error) => {
       console.error(command, { args, error });
-      return { error };
+      return { error, data: defaultReturn };
     });
 
 export const sendToRepl = (content: any) => null;
@@ -72,7 +72,7 @@ export const writeToFile = async (name: string, data: string) => {
 
 // change for fs
 export const listProjects = () =>
-  tauriCommand("list_projects", { name: initFolder });
+  tauriCommand("list_projects", { name: initFolder }, []);
 
 // import { readDir, BaseDirectory } from '@tauri-apps/api/fs';
 // // Reads the `$APPDATA/users` directory recursively
