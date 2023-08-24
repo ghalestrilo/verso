@@ -15,33 +15,33 @@ const registerShortcuts = ({
   repl: ReplState;
   track: TrackState;
 }) => {
-  register("CommandOrControl+H", () => {
-    console.log("Stop!");
-    repl.stopPlayback();
-  });
+  // register("CommandOrControl+H", () => {
+  //   console.log("Stop!");
+  //   repl.stopPlayback();
+  // });
 
-  register("Shift+Enter", () => {
-    console.log("Enter!");
-  });
+  // register("Shift+Enter", () => {
+  //   console.log("Enter!");
+  // });
 
-  register("CommandOrControl+O", () => {
-    console.log("Open!");
-    openFile(track.loadFile);
-  });
+  // register("CommandOrControl+O", () => {
+  //   console.log("Open!");
+  //   openFile(track.loadFile);
+  // });
 
-  register("CommandOrControl+S", () => {
-    console.log("Save!");
-    track?.raw && track.saveSessionToFile(track.filename, track.raw);
-  });
+  // register("CommandOrControl+S", () => {
+  //   console.log("Save!");
+  //   track?.raw && track.saveSessionToFile(track.filename, track.raw);
+  // });
 
-  register("CommandOrControl+Shift+S", () => {
-    console.log("Save as!");
-    saveFileAs(track.raw, track.loadFile);
-  });
+  // register("CommandOrControl+Shift+S", () => {
+  //   console.log("Save as!");
+  //   saveFileAs(track.raw, track.loadFile);
+  // });
 
-  register("CommandOrControl+Comma", () => {
-    console.log("Options!");
-  });
+  // register("CommandOrControl+Comma", () => {
+  //   console.log("Options!");
+  // });
 };
 
 export const useShortcuts = () => {
@@ -49,10 +49,14 @@ export const useShortcuts = () => {
   const repl = useReplState();
   const track = useTrackState();
 
+  const unregister = () => {
+    unregisterAll();
+  }
+
   useEffect(() => {
     if (focus === true) registerShortcuts({ repl, track });
     else unregisterAll();
 
-    return () => unregisterAll();
+    return unregister;
   }, [focus]);
 };

@@ -15,18 +15,21 @@ import Console from "./Console/Console";
 // import SettingsModal from "./SettingsModal/SettingsModal";
 
 import { documentDir } from "@tauri-apps/api/path";
+import { getVersoProjectDir } from "../desktop/api";
+import { exists } from "@tauri-apps/api/fs";
 
-const lastOpenedFile = (basepath) =>
-  `${basepath}verso/projects/sets/groove/2_astro_2.tidal`;
+const lastOpenedFile = (basepath) => {
+  return `${basepath}sets/groove/2_astro_2.tidal`
+};
 
 const SessionPage = () => {
-  // const initFile = config.init.file;
-
   const track = useTrackState();
   useEffect(() => {
-    documentDir().then((documentDirPath) => {
-      console.log(documentDirPath);
-      track.loadFile(lastOpenedFile(documentDirPath));
+    getVersoProjectDir()
+      .then(documentDirPath => {
+      const filename = lastOpenedFile(documentDirPath)
+      exists(filename)
+        .then(doesItExist => doesItExist && track.loadFile(filename))
     });
   }, []);
   const {

@@ -1,24 +1,31 @@
 // import axios from "axios";
 import config from "../config/config";
 import { dialog, invoke } from "@tauri-apps/api";
+import { BaseDirectory, documentDir } from "@tauri-apps/api/path";
 import { open, save } from "@tauri-apps/api/dialog";
 import {
   readTextFile,
   writeTextFile,
   exists,
-  BaseDirectory,
+  createDir,
 } from "@tauri-apps/api/fs";
 import { ClientChildProcess } from "../config/config";
 
 import { Command } from "@tauri-apps/api/shell";
-const command = Command.sidecar("my-sidecar");
-// const output = await command.execute();
 
-// now we can call our Command!
-// Right-click the application background and open the developer tools.
-// You will see "Hello, World!" printed in the console!
+export const getVersoProjectDir = () =>
+  documentDir().then((initFolder) => `${initFolder}verso/projects/`);
 
-const initFolder = "/Users/admin/.verso/projects";
+// Create Projects folder if it does not exist
+getVersoProjectDir()
+  .then((folder) => exists(folder))
+  .then((doesItExist) => {
+    if (doesItExist) return;
+    createDir("verso/projects", {
+      dir: BaseDirectory.AppData,
+      recursive: true,
+    });
+  });
 
 const tauriCommand = (command: string, args: any, defaultReturn = null) =>
   invoke(command, args)
@@ -44,20 +51,19 @@ export const startProcesses = async (
     command.stdout.on("data", (line) => onStdout?.(index, line));
     command.stderr.on("data", (line) => onStderr?.(index, line));
     command.on("close", async (data) => {
-      console.log(
-        `command finished with code ${data.code} and signal ${data.signal}`
-      );
-      // const output = await command.execute()
-      // console.log("command output:", output);
+      // console.log(
+      //   `command finished with code ${data.code} and signal ${data.signal}`
+      // );
     });
     return command;
   });
-  // const child = await command.spawn();
-  const children = await Promise.all(
-    commands.map((command) => command.spawn().then((child) => child))
-  );
-  console.log("children", children);
-  return children;
+
+  // const children = await Promise.all(
+  //   commands.map((command) => command.spawn().then((child) => child))
+  // );
+  // return children;
+
+  return [];
 };
 
 export const loadFile = async (filename = "") => {
@@ -72,7 +78,13 @@ export const writeToFile = async (name: string, data: string) => {
 
 // change for fs
 export const listProjects = () =>
-  tauriCommand("list_projects", { name: initFolder }, []);
+  getVersoProjectDir()
+    .then((versoProjectDir) =>
+      tauriCommand("list_projects", { name: versoProjectDir })
+    )
+    .catch((err) => {
+      // console.log(err)
+    });
 
 // import { readDir, BaseDirectory } from '@tauri-apps/api/fs';
 // // Reads the `$APPDATA/users` directory recursively

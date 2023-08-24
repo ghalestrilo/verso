@@ -21,6 +21,7 @@
       },
       "fs": {
         "writeFile": true,
+        "createDir": true,
         "exists": true,
         "readDir": true,
         "readFile": true,
@@ -32,25 +33,7 @@
       "shell": {
         "execute": true,
         "sidecar": true,
-        "open": true,
-        "scope": [
-          {
-            "name": "stack",
-            "cmd": "stack",
-            "args": [
-              "exec",
-              "ghci",
-              "--",
-              "-ghci-script",
-              "/Users/admin/git/libtidal/boot.tidal"
-            ]
-          },
-          {
-            "name": "sclang",
-            "cmd": "/Applications/SuperCollider.app/Contents/MacOS/sclang",
-            "args": []
-          }
-        ]
+        "open": true
       }
     },
     "bundle": {
@@ -68,7 +51,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.verso.dev",
+      "identifier": "verso",
       "longDescription": "",
       "macOS": {
         "entitlements": null,

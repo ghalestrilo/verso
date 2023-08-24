@@ -5,27 +5,28 @@ type State = VersoConfig & {
   updateSettings: (newSettings: VersoConfig) => void;
 };
 
-const versoSettingsLocalStorageName = "versoSettings";
+// const versoSettingsLocalStorageName = "versoSettings";
 
 const getInitialConfig = () => {
-  const previousSettingsString = localStorage.getItem(
-    versoSettingsLocalStorageName
-  );
-  let previousSettings = null;
-  try {
-    previousSettings = JSON.parse(previousSettingsString);
-  } catch {}
-  return { ...config, ...previousSettings };
+  // const previousSettingsString = localStorage.getItem(
+  //   versoSettingsLocalStorageName
+  // );
+  // let previousSettings = null;
+  // try {
+  //   previousSettings = JSON.parse(previousSettingsString || '');
+  // } catch {}
+  // return { ...config, ...previousSettings };
+  return config;
 };
 
 export const useSettingsState = create<State>((set) => ({
   ...getInitialConfig(),
   updateSettings: (newSettings) =>
     set((state) => {
-      localStorage.setItem(
-        versoSettingsLocalStorageName,
-        JSON.stringify(state)
-      );
+      // localStorage.setItem(
+      //   versoSettingsLocalStorageName,
+      //   JSON.stringify(state)
+      // );
       return {
         ...state,
         ...newSettings,
