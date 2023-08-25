@@ -19,7 +19,8 @@ import { getVersoProjectDir } from "../desktop/api";
 import { exists } from "@tauri-apps/api/fs";
 
 const lastOpenedFile = (basepath) => {
-  return `${basepath}sets/groove/2_astro_2.tidal`;
+  // return `${basepath}sets/groove/2_astro_2.tidal`;
+  return `${basepath}prece/3-satori-shuffle.tidal`;
 };
 
 const SessionPage = () => {
@@ -60,24 +61,25 @@ const SessionPage = () => {
   // }, [setTrackData, loadFile, raw, loadedTestFile, initFile]);
 
   return (
-    <Box size={"lg"}>
-      <HeaderMenu
-        track={track}
-        saveSessionToFile={saveSessionToFile}
-        stopPlayback={stopPlayback}
-        bootProcesses={bootProcesses}
-      />
-      <SimpleGrid columns={[1, 1, 2]} spacing={10}>
-        <SceneGrid
-          track={track}
-          onClickScenePlay={(raw) => fireScene(raw, 0)}
-        />
-        {/* <Editor /> */}
-        <GridItem>
-          <Console />
-        </GridItem>
-      </SimpleGrid>
-    </Box>
+    <SceneGrid track={track} onClickScenePlay={(raw) => fireScene(raw, 0)} />
+    // <Box size={"lg"}>
+    //   <HeaderMenu
+    //     track={track}
+    //     saveSessionToFile={saveSessionToFile}
+    //     stopPlayback={stopPlayback}
+    //     bootProcesses={bootProcesses}
+    //   />
+    //   <SimpleGrid columns={[1, 1, 2]} spacing={10}>
+    //     <SceneGrid
+    //       track={track}
+    //       onClickScenePlay={(raw) => fireScene(raw, 0)}
+    //     />
+    //     {/* <Editor /> */}
+    //     <GridItem>
+    //       <Console />
+    //     </GridItem>
+    //   </SimpleGrid>
+    // </Box>
   );
 };
 

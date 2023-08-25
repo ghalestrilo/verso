@@ -1,6 +1,5 @@
-import "./App.css";
-import "react-data-grid/lib/styles.css";
 import React, { useEffect } from "react";
+import "./App.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "./config/theme";
 
