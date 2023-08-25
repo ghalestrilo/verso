@@ -19,17 +19,17 @@ import { getVersoProjectDir } from "../desktop/api";
 import { exists } from "@tauri-apps/api/fs";
 
 const lastOpenedFile = (basepath) => {
-  return `${basepath}sets/groove/2_astro_2.tidal`
+  return `${basepath}sets/groove/2_astro_2.tidal`;
 };
 
 const SessionPage = () => {
   const track = useTrackState();
   useEffect(() => {
-    getVersoProjectDir()
-      .then(documentDirPath => {
-      const filename = lastOpenedFile(documentDirPath)
-      exists(filename)
-        .then(doesItExist => doesItExist && track.loadFile(filename))
+    getVersoProjectDir().then((documentDirPath) => {
+      const filename = lastOpenedFile(documentDirPath);
+      exists(filename).then(
+        (doesItExist) => doesItExist && track.loadFile(filename)
+      );
     });
   }, []);
   const {
@@ -72,7 +72,7 @@ const SessionPage = () => {
           track={track}
           onClickScenePlay={(raw) => fireScene(raw, 0)}
         />
-        <Editor />
+        {/* <Editor /> */}
         <GridItem>
           <Console />
         </GridItem>
